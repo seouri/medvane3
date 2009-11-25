@@ -1,0 +1,6 @@
+<%= number_with_delimiter(@count) %>
+<ol>
+<% for m in @medline do %>
+  <li><%= m.title %><br/><%= m.authors.join(" | ")%><br/><%= m.so %></li>
+<% end%>
+</ol>
