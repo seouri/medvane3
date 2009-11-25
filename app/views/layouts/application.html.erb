@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title><%= yield(:title) || controller.controller_name.titleize %> | Medvane </title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link rel="apple-touch-icon" href="/images/icon-57x57.png"/>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.0r4/build/reset-fonts-grids/reset-fonts-grids.css&2.8.0r4/build/base/base-min.css"/>
+<%= stylesheet_link_tag "screen" %>
+</head>
+<body>
+<div id="doc4" class="yui-t7">
+<div id="hd" role="banner">
+  <h1>Medvane 3</h1>
+</div><!-- #hd -->
+<div id="bd" role="main">
+<div class="yui-g">
+<%= yield %>
+</div><!-- .yui-g -->
+</div><!-- #bd -->
+<div id="ft" role="contentinfo">
+  Medvane 3
+</div><!-- #ft -->
+</div><!-- #doc4 .yui-t7 -->
+</body>
+</html>
