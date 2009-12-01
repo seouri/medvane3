@@ -1,9 +1,9 @@
 <% form_tag pubmed_path, :method => "get", :id => "pubmed_search" do %>
-  <%= text_field_tag('q', @q) %>
-  <%= submit_tag "Search PubMed", :name => nil, :disable_with => "Searching PubMed ..." %>
+  <%= text_field_tag('q', @q, :id => "pubmed_search_q") %>
+  <%= submit_tag "Search PubMed", :name => nil, :disable_with => "Searching PubMed ...", :id => "pubmed_search_submit" %>
 <% end %>
   
-
+<% if @count > 0 %>
 <div id="results_info">Results: <strong>1</strong> to <strong>10</strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
 <ol>
 <% for m in @medline do %>
@@ -13,5 +13,6 @@
 
 <% form_tag import_path do %>
   <%= hidden_field_tag('q', @q) %>
-  <%= submit_tag "Build your bibliome", :name => nil, :disable_with => "Building your bibliome ..." %>
+  <%= submit_tag "Build your bibliome", :name => nil, :disable_with => "Building your bibliome ..." , :id => "build_bibliome_submit" %>
+<% end %>
 <% end %>

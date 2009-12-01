@@ -10,3 +10,12 @@
   padding: 0.25em;
   background-color: #eee;
 }
+
+#pubmed_search_q {
+  width: 36em;
+  font-size: 146.5%;
+}
+#pubmed_search_submit, #build_bibliome_submit {
+  width: 12em;
+  font-size: 146.5%;
+}
