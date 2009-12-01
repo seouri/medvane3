@@ -1,0 +1,12 @@
+#ft {
+  margin: 1em 0;
+  padding: 0.25em 0;
+  border-top: 1px solid #333;
+  font-color: #333;
+  font-size: 77%;
+}
+#results_info {
+  margin: 1em 0;
+  padding: 0.25em;
+  background-color: #eee;
+}

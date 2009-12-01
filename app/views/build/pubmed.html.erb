@@ -1,6 +1,17 @@
-<%= number_with_delimiter(@count) %>
+<% form_tag pubmed_path, :method => "get", :id => "pubmed_search" do %>
+  <%= text_field_tag('q', @q) %>
+  <%= submit_tag "Search PubMed" %>
+<% end %>
+  
+
+<div id="results_info">Results: <strong>1</strong> to <strong>10</strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
 <ol>
 <% for m in @medline do %>
   <li><%= m.title %><br/><%= m.authors.join(" | ")%><br/><%= m.so %></li>
 <% end%>
 </ol>
+
+<% form_tag import_path do %>
+  <%= hidden_field_tag('q', @q) %>
+  <%= submit_tag "Build your bibliome" %>
+<% end %>

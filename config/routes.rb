@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed"
+  map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}
+  map.import '/build/import/:q', :controller => "build", :action => "import", :defaults => {:q => nil}
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
