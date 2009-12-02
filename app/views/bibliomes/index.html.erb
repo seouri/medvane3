@@ -1,0 +1,18 @@
+<h1>Listing bibliomes</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @bibliomes.each do |bibliome| %>
+  <tr>
+    <td><%= link_to 'Show', bibliome %></td>
+    <td><%= link_to 'Edit', edit_bibliome_path(bibliome) %></td>
+    <td><%= link_to 'Destroy', bibliome, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New bibliome', new_bibliome_path %>

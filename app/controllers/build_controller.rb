@@ -1,3 +1,4 @@
+require 'digest/md5'
 class BuildController < ApplicationController
   def pubmed
     @q = params[:q]
@@ -12,7 +13,14 @@ class BuildController < ApplicationController
   end
 
   def import
-    Delayed::Job.enqueue(PubmedImport.new(params[:q]))
+    q = params[:q]
+    unless q.blank?
+      @name = params[:bibliome_name].blank? ? Digest::MD5.hexdigest(Time.now.to_f.to_s + q) : params[:bibliome_name]
+      bibliome = Bibliome.find_or_initialize_by_name(@name)
+      bibliome.query = params[:q]
+      bibliome.save!
+      Delayed::Job.enqueue(PubmedImport.new(params[:q], bibliome.id))
+    end
   end
 
   def upload

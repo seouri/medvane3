@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :bibliomes
+
   map.resources :articles
 
   map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}

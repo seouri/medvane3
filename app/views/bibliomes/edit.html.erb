@@ -1,0 +1,12 @@
+<h1>Editing bibliome</h1>
+
+<% form_for(@bibliome) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @bibliome %> |
+<%= link_to 'Back', bibliomes_path %>

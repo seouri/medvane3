@@ -2,8 +2,9 @@ require 'cgi'
 require 'net/http'
 require 'uri'
 
-class PubmedImport < Struct.new(:query)
+class PubmedImport < Struct.new(:query, :bibliome_id)
   def perform
+    bibliome = Bibliome.find(bibliome_id)
     webenv, count = esearch(query)
     0.step(count, 10000) do |retstart|    
       efetch = efetch(webenv, retstart)
@@ -20,7 +21,8 @@ class PubmedImport < Struct.new(:query)
         a.vernacular_title  = m.pubmed['TT']
         a.abstract          = m.ab
         a.affiliation       = m.ad
-        a.save! if a.new_record?
+        a.bibliomes<<(bibliome)
+        a.save!
       end
     end
   end
