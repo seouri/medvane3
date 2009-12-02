@@ -25,14 +25,6 @@ class PubmedImport < Struct.new(:query)
     end
   end
 
-  def perform_old
-    pmids = Bio::NCBI::REST.esearch(query, {"retmax" => 100000}, 0)
-    efetch = Bio::PubMed.efetch(pmids)
-    efetch.each do |e|
-      m = Bio::MEDLINE.new(e)
-    end
-  end
-  
   def esearch(query)
     server = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
     params = {
