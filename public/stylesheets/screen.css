@@ -19,3 +19,6 @@
   width: 12em;
   font-size: 146.5%;
 }
+ol#results li {
+  margin: 0.5em 0;
+}

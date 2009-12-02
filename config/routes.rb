@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :articles
+
   map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}
   map.import '/build/import/:q', :controller => "build", :action => "import", :defaults => {:q => nil}
   

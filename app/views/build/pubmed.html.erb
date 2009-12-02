@@ -4,10 +4,10 @@
 <% end %>
   
 <% if @count > 0 %>
-<div id="results_info">Results: <strong>1</strong> to <strong>10</strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
-<ol>
+<div id="results_info">Results: <strong>1</strong> to <strong><%= @show_count %></strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
+<ol id="results">
 <% for m in @medline do %>
-  <li><%= m.title %><br/><%= m.authors.join(" | ")%><br/><%= m.so %></li>
+  <li id="pmid_<%= m.pmid %>"><%= m.title %><br/><%= m.authors.join(" | ")%><br/><%= m.so %></li>
 <% end%>
 </ol>
 

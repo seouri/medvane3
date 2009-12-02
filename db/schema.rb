@@ -9,12 +9,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091201031754) do
+ActiveRecord::Schema.define(:version => 20091201195308) do
+
+  create_table "articles", :force => true do |t|
+    t.integer  "journal_id"
+    t.string   "vol"
+    t.string   "issue"
+    t.string   "page"
+    t.date     "pubdate"
+    t.string   "medline_date"
+    t.text     "title"
+    t.text     "vernacular_title"
+    t.text     "abstract"
+    t.text     "affiliation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "articles", ["journal_id", "pubdate"], :name => "index_articles_on_journal_id_and_pubdate"
+  add_index "articles", ["pubdate"], :name => "index_articles_on_pubdate"
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
+    t.integer  "priority",                         :default => 0
+    t.integer  "attempts",                         :default => 0
+    t.text     "handler",    :limit => 2147483647
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
