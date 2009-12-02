@@ -9,8 +9,7 @@ class PubmedImport < Struct.new(:query)
       efetch = efetch(webenv, retstart)
       efetch.split(/\n\n+/).each do |e|
         m = Bio::MEDLINE.new(e)
-        a = Article.new
-        a.id                = m.pmid
+        a = Article.find_or_initialize_by_id(m.pmid)
         a.journal_id        = m.pubmed['JID']
         a.vol               = m.vi
         a.issue             = m.ip
@@ -18,13 +17,14 @@ class PubmedImport < Struct.new(:query)
         #a.pubdate
         #a.medline_date
         a.title             = m.ti
-        a.vernacular_title  = m.pubmed.['TT']
+        a.vernacular_title  = m.pubmed['TT']
         a.abstract          = m.ab
         a.affiliation       = m.ad
-        a.save!
+        a.save! if a.new_record?
       end
     end
   end
+
   def perform_old
     pmids = Bio::NCBI::REST.esearch(query, {"retmax" => 100000}, 0)
     efetch = Bio::PubMed.efetch(pmids)

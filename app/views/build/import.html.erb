@@ -3,7 +3,7 @@ Background job added!
 <table>
   <tr>
     <th>ID</th>
-    <th>PRIORITY</th>
+    <th>LAST ERROR</th>
     <th>JOB</th>
     <th>RUN AT</th>
     <th>CREATED AT</th>
@@ -11,7 +11,7 @@ Background job added!
 <% Delayed::Job.find(:all).each do |j| %>
   <tr>
     <td><%= j.id %></td>
-    <td><%= j.priority%></td>
+    <td><%= j.last_error %></td>
     <td><%= j.handler %></td>
     <td><%= j.run_at %></td>
     <td><%= j.created_at %></td>
