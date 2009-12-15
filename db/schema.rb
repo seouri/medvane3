@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091202050017) do
+ActiveRecord::Schema.define(:version => 20091215091337) do
 
   create_table "articles", :force => true do |t|
     t.integer  "journal_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20091202050017) do
     t.text     "vernacular_title"
     t.text     "abstract"
     t.text     "affiliation"
+    t.string   "source"
+    t.integer  "bibliomes_count",  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -29,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20091202050017) do
   add_index "articles", ["journal_id", "pubdate"], :name => "index_articles_on_journal_id_and_pubdate"
   add_index "articles", ["pubdate"], :name => "index_articles_on_pubdate"
 
-  create_table "articles_bibliomes", :id => false, :force => true do |t|
+  create_table "articles_bibliomes", :force => true do |t|
     t.integer "article_id"
     t.integer "bibliome_id"
   end
@@ -38,9 +40,13 @@ ActiveRecord::Schema.define(:version => 20091202050017) do
     t.string   "name"
     t.text     "query"
     t.integer  "articles_count", :default => 0
+    t.boolean  "built",          :default => false
+    t.datetime "delete_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "bibliomes", ["name"], :name => "index_bibliomes_on_name", :unique => true
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",                         :default => 0
@@ -54,5 +60,15 @@ ActiveRecord::Schema.define(:version => 20091202050017) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "journals", :force => true do |t|
+    t.string   "title"
+    t.string   "abbr"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "journals", ["abbr"], :name => "index_journals_on_abbr", :unique => true
+  add_index "journals", ["title"], :name => "index_journals_on_title", :unique => true
 
 end

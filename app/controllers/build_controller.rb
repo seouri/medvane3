@@ -9,17 +9,17 @@ class BuildController < ApplicationController
       pmids = Bio::PubMed.esearch(@q, {"retmax" => 10})
       efetch = Bio::PubMed.efetch(pmids)
       @medline = efetch.map {|e| Bio::MEDLINE.new(e)}
+      @bibliome_name = Digest::MD5.hexdigest(Time.now.to_f.to_s + @q)
     end
   end
 
   def import
     q = params[:q]
-    unless q.blank?
-      @name = params[:bibliome_name].blank? ? Digest::MD5.hexdigest(Time.now.to_f.to_s + q) : params[:bibliome_name]
-      bibliome = Bibliome.find_or_initialize_by_name(@name)
-      bibliome.query = params[:q]
-      bibliome.save!
-      Delayed::Job.enqueue(PubmedImport.new(params[:q], bibliome.id))
+    @bibliome = Bibliome.find_or_initialize_by_name(params[:name])
+    if @bibliome.new_record? and q.blank? == false
+      @bibliome.query = params[:q]
+      @bibliome.save!
+      Delayed::Job.enqueue(PubmedImport.new(q, @bibliome.id))
     end
   end
 

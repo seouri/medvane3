@@ -1,0 +1,20 @@
+<h1>Editing journal</h1>
+
+<% form_for(@journal) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :abbr %><br />
+    <%= f.text_field :abbr %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @journal %> |
+<%= link_to 'Back', journals_path %>

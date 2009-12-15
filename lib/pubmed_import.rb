@@ -6,25 +6,36 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
   def perform
     bibliome = Bibliome.find(bibliome_id)
     webenv, count = esearch(query)
+    #bibliome.articles_count = count
+    bibliome.delete_at = 2.weeks.from_now
+    bibliome.save!
     0.step(count, 10000) do |retstart|    
       efetch = efetch(webenv, retstart)
       efetch.split(/\n\n+/).each do |e|
         m = Bio::MEDLINE.new(e)
+        journal = Journal.find_or_initialize_by_abbr(m.ta)
+        if journal.new_record?
+          journal.title = m.pubmed['JT']
+          journal.save!
+        end
         a = Article.find_or_initialize_by_id(m.pmid)
-        a.journal_id        = m.pubmed['JID']
+        a.journal           = journal
         a.vol               = m.vi
         a.issue             = m.ip
         a.page              = m.pg
         #a.pubdate
-        #a.medline_date
+        a.medline_date      = m.dp
         a.title             = m.ti
-        a.vernacular_title  = m.pubmed['TT']
-        a.abstract          = m.ab
+        #a.vernacular_title  = m.pubmed['TT']
+        #a.abstract          = m.ab
         a.affiliation       = m.ad
+        a.source            = m.source
         a.bibliomes<<(bibliome)
         a.save!
       end
     end
+    bibliome.built = true
+    bibliome.save!
   end
 
   def esearch(query)

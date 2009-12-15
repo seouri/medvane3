@@ -1,10 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :journals
+
   map.resources :bibliomes
 
   map.resources :articles
 
   map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}
-  map.import '/build/import/:q', :controller => "build", :action => "import", :defaults => {:q => nil}
+  map.import '/build/import/:name', :controller => "build", :action => "import", :defaults => {:name => nil}
   
   # The priority is based upon order of creation: first created -> highest priority.
 

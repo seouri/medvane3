@@ -4,8 +4,11 @@ class CreateBibliomes < ActiveRecord::Migration
       t.string :name
       t.text :query
       t.integer :articles_count, :default => 0
+      t.boolean :built, :default => false
+      t.datetime :delete_at
       t.timestamps
     end
+    add_index :bibliomes, :name, :unique => true
   end
 
   def self.down

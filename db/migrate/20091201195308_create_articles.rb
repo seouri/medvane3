@@ -11,6 +11,8 @@ class CreateArticles < ActiveRecord::Migration
       t.text :vernacular_title
       t.text :abstract
       t.text :affiliation
+      t.string :source
+      t.integer :bibliomes_count, :default => 0
       t.timestamps
     end
     add_index :articles, [:journal_id, :pubdate]

@@ -1,6 +1,6 @@
 class CreateArticlesBibliomes < ActiveRecord::Migration
   def self.up
-    create_table :articles_bibliomes, :id => false do |t|
+    create_table :articles_bibliomes do |t|
       t.integer :article_id
       t.integer :bibliome_id
     end

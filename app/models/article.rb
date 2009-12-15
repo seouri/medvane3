@@ -1,3 +1,7 @@
 class Article < ActiveRecord::Base
-  has_and_belongs_to_many :bibliomes
+  has_many :articles_bibliomes
+  has_many :bibliomes, :through => :articles_bibliomes
+  belongs_to :journal
+  
+  validates_associated :journal
 end
