@@ -8,8 +8,6 @@ class CreateArticles < ActiveRecord::Migration
       t.date :pubdate
       t.string :medline_date
       t.text :title
-      t.text :vernacular_title
-      t.text :abstract
       t.text :affiliation
       t.string :source
       t.integer :bibliomes_count, :default => 0

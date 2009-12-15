@@ -5,6 +5,7 @@ class CreateBibliomes < ActiveRecord::Migration
       t.text :query
       t.integer :articles_count, :default => 0
       t.boolean :built, :default => false
+      t.datetime :built_at
       t.datetime :delete_at
       t.timestamps
     end

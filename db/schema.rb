@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215091337) do
+ActiveRecord::Schema.define(:version => 20091215164844) do
 
   create_table "articles", :force => true do |t|
     t.integer  "journal_id"
@@ -19,11 +19,9 @@ ActiveRecord::Schema.define(:version => 20091215091337) do
     t.date     "pubdate"
     t.string   "medline_date"
     t.text     "title"
-    t.text     "vernacular_title"
-    t.text     "abstract"
     t.text     "affiliation"
     t.string   "source"
-    t.integer  "bibliomes_count",  :default => 0
+    t.integer  "bibliomes_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,11 +34,32 @@ ActiveRecord::Schema.define(:version => 20091215091337) do
     t.integer "bibliome_id"
   end
 
+  create_table "authors", :force => true do |t|
+    t.string "last_name"
+    t.string "fore_name"
+    t.string "initials"
+    t.string "suffix"
+  end
+
+  add_index "authors", ["last_name", "fore_name"], :name => "index_authors_on_last_name_and_fore_name", :unique => true
+  add_index "authors", ["last_name", "initials"], :name => "index_authors_on_last_name_and_initials"
+
+  create_table "authorships", :force => true do |t|
+    t.integer "article_id"
+    t.integer "author_id"
+    t.integer "position"
+    t.integer "last_position"
+  end
+
+  add_index "authorships", ["article_id", "position"], :name => "index_authorships_on_article_id_and_position"
+  add_index "authorships", ["author_id"], :name => "index_authorships_on_author_id"
+
   create_table "bibliomes", :force => true do |t|
     t.string   "name"
     t.text     "query"
     t.integer  "articles_count", :default => 0
     t.boolean  "built",          :default => false
+    t.datetime "built_at"
     t.datetime "delete_at"
     t.datetime "created_at"
     t.datetime "updated_at"

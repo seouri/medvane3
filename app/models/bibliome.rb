@@ -6,9 +6,9 @@ class Bibliome < ActiveRecord::Base
   
   def status
     if built?
-      "Built"
+      "finished importing"
     else
-      "Working"
+      "imported"
     end
   end
 end

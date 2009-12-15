@@ -1,0 +1,23 @@
+<p>
+  <b>Last name:</b>
+  <%=h @author.last_name %>
+</p>
+
+<p>
+  <b>Fore name:</b>
+  <%=h @author.fore_name %>
+</p>
+
+<p>
+  <b>Initials:</b>
+  <%=h @author.initials %>
+</p>
+
+<p>
+  <b>Suffix:</b>
+  <%=h @author.suffix %>
+</p>
+
+
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%= link_to 'Back', authors_path %>
