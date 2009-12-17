@@ -3,10 +3,9 @@ class CreateJournals < ActiveRecord::Migration
     create_table :journals do |t|
       t.string :title
       t.string :abbr
-      t.timestamps
     end
-    add_index :journals, :title, :unique => true
-    add_index :journals, :abbr, :unique => true
+    add_index :journals, :title
+    add_index :journals, :abbr
   end
 
   def self.down

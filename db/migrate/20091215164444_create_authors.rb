@@ -6,7 +6,7 @@ class CreateAuthors < ActiveRecord::Migration
       t.string :initials
       t.string :suffix
     end
-    add_index :authors, [:last_name, :fore_name], :unique => true
+    add_index :authors, [:last_name, :fore_name, :suffix], :unique => true
     add_index :authors, [:last_name, :initials]
   end
 

@@ -15,11 +15,13 @@ class BuildController < ApplicationController
 
   def import
     q = params[:q]
+    @count = params[:c] || 0
     @bibliome = Bibliome.find_or_initialize_by_name(params[:name])
-    if @bibliome.new_record? and q.blank? == false
+    if @bibliome.new_record? and q.blank? == false and @count.to_i > 1
       @bibliome.query = params[:q]
       @bibliome.save!
-      Delayed::Job.enqueue(PubmedImport.new(q, @bibliome.id))
+      priority = (50 / Math.log(@count)).to_i
+      Delayed::Job.enqueue(PubmedImport.new(q, @bibliome.id), priority)
     end
   end
 

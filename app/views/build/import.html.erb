@@ -1,4 +1,4 @@
-<h1><%=h @bibliome.name %>: <%= @bibliome.status + " " + pluralize(@bibliome.articles_count, 'article') + " in " + processing_time(@bibliome) %></h1>
+<h1><%=h @bibliome.name %>: <%= @bibliome.status + " " + @bibliome.articles_count.to_s + " of " + @count.to_s + " articles in " + processing_time(@bibliome) %></h1>
 
 <table>
   <tr>

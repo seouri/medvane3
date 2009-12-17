@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tree_number: MyString
+  subject_id: 1
+  parent_id: 1
+
+two:
+  tree_number: MyString
+  subject_id: 1
+  parent_id: 1

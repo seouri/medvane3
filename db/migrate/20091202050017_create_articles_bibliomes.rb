@@ -4,6 +4,7 @@ class CreateArticlesBibliomes < ActiveRecord::Migration
       t.integer :article_id
       t.integer :bibliome_id
     end
+    add_index :articles_bibliomes, [:bibliome_id, :article_id], :unique => true
   end
 
   def self.down

@@ -1,0 +1,16 @@
+<h1>Editing pubtype</h1>
+
+<% form_for(@pubtype) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label : %><br />
+    <%= f.text_field : %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @pubtype %> |
+<%= link_to 'Back', pubtypes_path %>

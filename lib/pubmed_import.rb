@@ -6,20 +6,18 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
   def perform
     bibliome = Bibliome.find(bibliome_id)
     webenv, count = esearch(query)
-    bibliome.delete_at = 2.weeks.from_now
-    bibliome.save!
     0.step(count, 5000) do |retstart|    
       efetch = efetch(webenv, retstart)
       efetch.split(/\n\n+/).each do |e|
         # http://www.nlm.nih.gov/bsd/mms/medlineelements.html
         m = Bio::MEDLINE.new(e)
-        journal = Journal.find_or_initialize_by_abbr(m.ta)
-        if journal.new_record?
-          journal.title = m.jt
-          journal.save!
-        end
-
         a = Article.find_or_initialize_by_id(m.pmid)
+
+        journal = Journal.find_or_create_by_abbr_and_title(m.ta, m.jt)
+        subjects = m.major_descriptors.map {|d| Subject.find_by_term(d)}
+        pubtypes = m.pt.map {|p| Pubtype.find_by_term(p)}
+        authors = m.authors.map {|u| Author.find_or_create_by_last_name_and_fore_name_and_initials_and_suffix(u['last_name'], u['fore_name'], u['initials'], u['suffix'])}
+
         if a.new_record?
           a.journal      = journal
           a.vol          = m.vi
@@ -30,25 +28,31 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
           a.title        = m.ti
           a.affiliation  = m.ad
           a.source       = m.source
+          a.save!
+          subjects.each do |s|
+            a.subjects<<(s)
+          end
+          pubtypes.each do |p|
+            a.pubtypes<<(p)
+          end
+          last_position = authors.size
+          authors.each_index do |i|
+            position = i + 1
+            authors[i].authorships.create!(
+              :article => a,
+              :position => position,
+              :last_position => last_position
+            )
+          end
         end
+
         a.bibliomes<<(bibliome)
         a.save!
-        
-        last_position = m.authors.size
-        m.authors.each do |ma|
-          author = Author.find_or_initialize_by_last_name_and_fore_name(ma["last_name"], ma["fore_name"])
-          if author.new_record?
-            author.initials = ma["initials"]
-            author.suffix = ma["suffix"]
-            author.save!
-            position = m.authors.index(ma) + 1
-            author.authorships.create!(:article => a, :position => position, :last_position => last_position)          end
-
-        end
       end
     end
     bibliome.built = true
     bibliome.built_at = Time.now
+    bibliome.delete_at = 2.weeks.from_now
     bibliome.save!
   end
 
@@ -74,7 +78,7 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
       "db"          => "pubmed",
       "tool"        => "medvane.org",
       "WebEnv"      => webenv,
-      "retmax"      => 10000,
+      "retmax"      => 5000,
       "rettype"     => "medline",
       "retmode"     => "text",
       "retstart"    => retstart,
