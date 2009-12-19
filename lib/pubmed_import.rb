@@ -20,11 +20,7 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
 
         if a.new_record?
           a.journal      = journal
-          a.vol          = m.vi
-          a.issue        = m.ip
-          a.page         = m.pg
-          #a.pubdate
-          a.medline_date = m.dp
+          a.pubdate      = m.pubdate
           a.title        = m.ti
           a.affiliation  = m.ad
           a.source       = m.source

@@ -1,5 +1,23 @@
 module Bio
   class MEDLINE < NCBIDB
+    MONTH = {
+      "Jan" => 1,
+      "Feb" => 2,
+      "Mar" => 3,
+      "Apr" => 4,
+      "May" => 5,
+      "Jun" => 6,
+      "Jul" => 7,
+      "Aug" => 8,
+      "Sep" => 9,
+      "Oct" => 10,
+      "Nov" => 11,
+      "Dec" => 12,
+      "Spr" => 3,
+      "Sum" => 6,
+      "Aut" => 9,
+      "Win" => 12,
+    }
     def initialize(entry)
       # PMID: 19900898. One MH could span in more than one lines.
       # In such cases, the second line is recognized as another MH rather than 
@@ -46,10 +64,26 @@ module Bio
       end
       return authors
     end
-    
+
     def major_descriptors
       #@pubmed['MH'].strip.split(/\n/).select {|m| m.match(/\*/)}.map {|m| m.gsub(/\/.+$/, "")}
       mh.select {|m| m.match(/\*/)}.map {|m| m.gsub(/\*|\/.+$/, "")}
+    end
+
+    def pub_month
+      MONTH[dp[5, 3]] || 1
+    end
+
+    def pub_day
+      if dp[9,2] && dp[9,2].match(/^\d+$/)
+        dp[9,2]
+      else
+        1
+      end
+    end
+
+    def pubdate
+      sprintf("%04d-%02d-%02d", year, pub_month, pub_day)
     end
   end
 end

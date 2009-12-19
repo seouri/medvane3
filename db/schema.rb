@@ -20,18 +20,12 @@ ActiveRecord::Schema.define(:version => 20091217011057) do
   add_index "article_types", ["pubtype_id"], :name => "index_article_types_on_pubtype_id"
 
   create_table "articles", :force => true do |t|
-    t.integer  "journal_id"
-    t.string   "vol"
-    t.string   "issue"
-    t.string   "page"
-    t.date     "pubdate"
-    t.string   "medline_date"
-    t.text     "title"
-    t.text     "affiliation"
-    t.string   "source"
-    t.integer  "bibliomes_count", :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "journal_id"
+    t.date    "pubdate"
+    t.text    "title"
+    t.text    "affiliation"
+    t.string  "source"
+    t.integer "bibliomes_count", :default => 0
   end
 
   add_index "articles", ["journal_id", "pubdate"], :name => "index_articles_on_journal_id_and_pubdate"
@@ -78,9 +72,9 @@ ActiveRecord::Schema.define(:version => 20091217011057) do
   add_index "bibliomes", ["name"], :name => "index_bibliomes_on_name", :unique => true
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",                         :default => 0
-    t.integer  "attempts",                         :default => 0
-    t.text     "handler",    :limit => 2147483647
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
