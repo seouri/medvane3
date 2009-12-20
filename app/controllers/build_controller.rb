@@ -4,11 +4,9 @@ class BuildController < ApplicationController
     @q = params[:q]
     @count = 0
     unless @q.blank?
-      @count = Bio::NCBI::REST.esearch_count(@q, {"db" => "pubmed"})
+      webenv, @count = Medvane::Eutils.esearch(@q)
+      @medline = Medvane::Eutils.efetch(webenv, 0, 10)
       @show_count = @count < 10 ? @count : 10
-      pmids = Bio::PubMed.esearch(@q, {"retmax" => 10})
-      efetch = Bio::PubMed.efetch(pmids)
-      @medline = efetch.map {|e| Bio::MEDLINE.new(e)}
       @bibliome_name = Digest::MD5.hexdigest(Time.now.to_f.to_s + @q)
     end
   end
