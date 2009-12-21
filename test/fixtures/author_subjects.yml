@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  author_id: 1
+  subject_id: 1
+  year: MyString
+  direct: 1
+  descendant: 1
+  total: 1
+
+two:
+  author_id: 1
+  subject_id: 1
+  year: MyString
+  direct: 1
+  descendant: 1
+  total: 1
