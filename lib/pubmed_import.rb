@@ -16,7 +16,8 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
         subjects = m.major_descriptors.map {|d| Subject.find_by_term(d)}
         pubtypes = m.pt.map {|p| Pubtype.find_by_term(p)}
         authors = m.authors.map {|u| Author.find_or_create_by_last_name_and_fore_name_and_initials_and_suffix(u['last_name'], u['fore_name'], u['initials'], u['suffix'])}
-
+        genes = []
+        
         if a.new_record?
           a.journal      = journal
           a.pubdate      = m.pubdate
