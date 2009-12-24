@@ -1,6 +1,6 @@
 class Bibliome < ActiveRecord::Base
-  has_many :articles_bibliomes
-  has_many :articles, :through => :articles_bibliomes
+  has_many :article_bibliomes
+  has_many :articles, :through => :article_bibliomes
   has_many :author_journals
   has_many :coauthorships
   has_many :author_subjects

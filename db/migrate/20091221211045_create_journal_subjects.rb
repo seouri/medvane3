@@ -5,12 +5,12 @@ class CreateJournalSubjects < ActiveRecord::Migration
       t.integer :journal_id
       t.integer :subject_id
       t.string :year
-      t.integer :direct
-      t.integer :descendant
-      t.integer :total
+      t.integer :direct, :default => 0
+      t.integer :descendant, :default => 0
+      t.integer :total, :default => 0
     end
-    add_index :journal_subjects, [:bibliome_id, :journal_id]
-    add_index :journal_subjects, [:bibliome_id, :subject_id]
+    add_index :journal_subjects, [:bibliome_id, :journal_id, :year]
+    add_index :journal_subjects, [:bibliome_id, :subject_id, :year]
   end
 
   def self.down

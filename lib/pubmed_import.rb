@@ -2,13 +2,19 @@ require 'cgi'
 require 'net/http'
 require 'uri'
 
-class PubmedImport < Struct.new(:query, :bibliome_id)
+# 1. get 5000 PMIDs for a given search
+# 2. select PMIDs not in Article
+# 3. fetch articles in step 2 in MEDLINE format
+# 4. repeat 1-3 until all articles are received
+class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
+  RETMAX = 5000
+
   def perform
     bibliome = Bibliome.find(bibliome_id)
-    webenv, count = Medvane::Eutils.esearch(query)
-    0.step(count, 5000) do |retstart|    
-      efetch = Medvane::Eutils.efetch(webenv, retstart)
-      efetch.each do |m|
+    #webenv, count = Medvane::Eutils.esearch(query)
+    0.step(count.to_i, RETMAX) do |retstart|    
+      medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
+      medline.each do |m|
         # http://www.nlm.nih.gov/bsd/mms/medlineelements.html
         a = Article.find_or_initialize_by_id(m.pmid)
 
@@ -25,12 +31,15 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
           a.affiliation  = m.ad
           a.source       = m.source
           a.save!
+
           subjects.each do |s|
             a.subjects<<(s)
           end
+
           pubtypes.each do |p|
             a.pubtypes<<(p)
           end
+
           last_position = authors.size
           authors.each_index do |i|
             position = i + 1
@@ -40,15 +49,79 @@ class PubmedImport < Struct.new(:query, :bibliome_id)
               :last_position => last_position
             )
           end
+          a.save!
         end
 
-        a.bibliomes<<(bibliome)
-        a.save!
+        authors.each_index do |i|
+          author = authors[i]
+          position = position_name(i + 1, authors.size)
+
+          #bibliome.author_journals
+          aj = AuthorJournal.find_or_create_by_bibliome_id_and_author_id_and_journal_id_and_year(bibliome.id, author.id, journal.id, m.year)
+          aj.increment!(position)
+          aj.increment!(:total)
+
+          #bibliome.coauthorships
+          authors.select {|c| c.id != i}.each do |coauthor|
+            ca = Coauthorship.find_or_create_by_bibliome_id_and_author_id_and_coauthor_id_and_year(bibliome.id, author.id, coauthor.id, m.year)
+            ca.increment!(position)
+            ca.increment!(:total)
+          end
+
+          #bibliome.author_subjects
+          subjects.each do |subject|
+            as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, m.year)
+            ["_direct", "_total"].each do |stype|
+              as.increment!(position + stype)
+              as.increment!("total" + stype)
+            end
+          end
+          ## author_subject descendant
+
+          #bibliome.author_pubtypes
+          pubtypes.each do |pubtype|
+            ap = AuthorPubtype.find_or_create_by_bibliome_id_and_author_id_and_pubtype_id_and_year(bibliome.id, author.id, pubtype.id, m.year)
+            ap.increment!(position)
+            ap.increment!(:total)
+          end
+        end
+
+        #bibliome.journal_pubtypes
+        pubtypes.each do |pubtype|
+          jp = JournalPubtype.find_or_create_by_bibliome_id_and_journal_id_and_pubtype_id_and_year(bibliome.id, journal.id, pubtype.id, m.year)
+          jp.increment!(:articles)
+        end
+
+        #bibliome.journal_subject
+        subjects.each do |subject|
+          js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
+          js.increment!(:direct)
+          
+          #bibliome.cosubjects
+          #subject.select {|s| s.id != subject.id}.each do |cosubject|
+          #end
+          #cosubjectst descendant
+        end
+        ## journal_subject descendant
+
+        bibliome.articles<<(a)
+        bibliome.save!
       end
     end
+
     bibliome.built = true
     bibliome.built_at = Time.now
     bibliome.delete_at = 2.weeks.from_now
     bibliome.save!
+  end
+  
+  def position_name(position, last_position)
+    if position == 1
+      return "first"
+    elsif position > 1 && position == last_position
+      return "last"
+    else
+      return "middle"
+    end
   end
 end

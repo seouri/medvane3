@@ -15,6 +15,7 @@
 <% form_tag import_path(:name => @bibliome_name), :method => "get" do %>
   <%= hidden_field_tag('q', @q) %>
   <%= hidden_field_tag('c', @count) %>
+  <%= hidden_field_tag('w', @webenv) %>
   <%= submit_tag "Build your bibliome", :name => nil, :disable_with => "Building your bibliome ..." , :id => "build_bibliome_submit" %>
 <% end %>
 <% end %>

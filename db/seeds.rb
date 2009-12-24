@@ -30,3 +30,12 @@ if File.stat(mesh_trees_file).size > 0
     end
   end
 end
+
+mesh_ancestors_file = File.join(File.dirname(__FILE__), 'mesh_ancestors.2010.txt')
+if File.stat(mesh_ancestors_file).size > 0
+  File.foreach(mesh_ancestors_file) do |record|
+    t = MeshAncestor.new
+    t.subject_id, t.ancestor_id = record.chomp.split("\t")
+    t.save!
+  end
+end

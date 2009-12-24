@@ -83,7 +83,7 @@ module Bio
     end
 
     def pubdate
-      sprintf("%04d-%02d-%02d", year, pub_month, pub_day)
+      sprintf("%04d-%02d-%02d", year || 0, pub_month || 0, pub_day || 0)
     end
   end
 end

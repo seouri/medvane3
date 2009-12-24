@@ -3,13 +3,17 @@ require 'net/http'
 require 'uri'
 
 module Medvane::Eutils
-  EUTILS_URL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  EUTILS_URL  = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  TOOL_NAME   = "my.medvane.org"
+  TOOL_EMAIL  = "eutils@medvane.org"
+
   def esearch(query)
     server = EUTILS_URL + "esearch.fcgi"
     params = {
       "db"          => "pubmed",
       "term"        => query,
-      "tool"        => "medvane.org",
+      "tool"        => TOOL_NAME,
+      "email"       => TOOL_EMAIL,
       "retmax"      => 0,
       "usehistory"  => "y",
     }
@@ -21,20 +25,30 @@ module Medvane::Eutils
   end
   module_function :esearch
 
-  def efetch(webenv, retstart, retmax = 5000)
+  def efetch(webenv, retstart = 0, retmax = 5000, rettype = "uilist")
     server = EUTILS_URL + "efetch.fcgi"
     params = {
       "db"          => "pubmed",
-      "tool"        => "medvane.org",
+      "tool"        => TOOL_NAME,
+      "email"       => TOOL_EMAIL,
       "WebEnv"      => webenv,
       "retmax"      => retmax,
-      "rettype"     => "medline",
+      "rettype"     => rettype,
       "retmode"     => "text",
       "retstart"    => retstart,
       "query_key"   => 1,
     }
     response = Net::HTTP.post_form(URI.parse(server), params)
-    return response.body.split(/\n\n+/).map {|e| Bio::MEDLINE.new(e) }
+    medline = []
+    unless response.body.blank?
+      case rettype
+      when "uilist"
+        medline = response.body.split(/\n/)
+      when "medline"
+        medline = response.body.split(/\n\n+/).map {|e| Bio::MEDLINE.new(e) }
+      end
+    end
+    return medline
   end
   module_function :efetch
 end

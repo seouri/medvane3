@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  subjct_id: 1
+  ancestor_id: 1
+
+two:
+  subjct_id: 1
+  ancestor_id: 1

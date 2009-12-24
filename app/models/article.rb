@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
-  has_many :articles_bibliomes
-  has_many :bibliomes, :through => :articles_bibliomes
+  has_many :article_bibliomes
+  has_many :bibliomes, :through => :article_bibliomes
   belongs_to :journal
   has_many :authorships
   has_many :authors, :through => :authorships
