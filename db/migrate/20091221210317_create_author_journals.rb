@@ -10,8 +10,8 @@ class CreateAuthorJournals < ActiveRecord::Migration
       t.integer :middle, :default => 0
       t.integer :total, :default => 0
     end
-    add_index :author_journals, [:bibliome_id, :author_id, :year]
-    add_index :author_journals, [:bibliome_id, :journal_id, :year]
+    add_index :author_journals, [:bibliome_id, :author_id, :journal_id, :year], :name => 'index_author_journals_on_bibliome_author_journal_id_and_year'
+    add_index :author_journals, [:bibliome_id, :journal_id, :author_id, :year], :name => 'index_author_journals_on_bibliome_journal_author_id_and_year'
   end
 
   def self.down

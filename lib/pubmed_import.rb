@@ -20,6 +20,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
 
         journal = Journal.find_or_create_by_abbr_and_title(m.ta, m.jt)
         subjects = m.major_descriptors.map {|d| Subject.find_by_term(d)}
+        ancestors = subjects.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s)}
         pubtypes = m.pt.map {|p| Pubtype.find_by_term(p)}
         authors = m.authors.map {|u| Author.find_or_create_by_last_name_and_fore_name_and_initials_and_suffix(u['last_name'], u['fore_name'], u['initials'], u['suffix'])}
         genes = []
@@ -77,6 +78,13 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
             end
           end
           ## author_subject descendant
+          ancestors.try(:each) do |subject|
+            as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, m.year)
+            ["_descendant", "_total"].each do |stype|
+              as.increment!(position + stype)
+              as.increment!("total" + stype)
+            end
+          end
 
           #bibliome.author_pubtypes
           pubtypes.each do |pubtype|
@@ -96,14 +104,30 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
         subjects.each do |subject|
           js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
           js.increment!(:direct)
+          js.increment!(:total)
           
           #bibliome.cosubjects
-          #subject.select {|s| s.id != subject.id}.each do |cosubject|
-          #end
-          #cosubjectst descendant
-        end
-        ## journal_subject descendant
+          subjects.reject {|s| s.id == subject.id}.each do |cosubject|
+            cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, m.year)
+            cs.increment!(:direct)
+            cs.increment!(:total)
+          end
 
+          #cosubjectst descendant
+          subjects.reject {|s| s.id == subject.id}.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s) || (subject.id == s.id)}.try(:each) do |cosubject|
+            cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, m.year)
+            cs.increment!(:descendant)
+            cs.increment!(:total)
+          end
+        end
+
+        ## journal_subject descendant
+        ancestors.try(:each) do |subject|
+          js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
+          js.increment!(:descendant)
+          js.increment!(:total)
+        end
+ 
         bibliome.articles<<(a)
         bibliome.save!
       end

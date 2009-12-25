@@ -10,7 +10,7 @@ class CreateCoauthorships < ActiveRecord::Migration
       t.integer :middle, :default => 0
       t.integer :total, :default => 0
     end
-    add_index :coauthorships, [:bibliome_id, :author_id, :year]
+    add_index :coauthorships, [:bibliome_id, :author_id, :coauthor_id, :year], :name => 'index_coauthorships_on_bibliome_author_coauthor_id_and_year'
   end
 
   def self.down

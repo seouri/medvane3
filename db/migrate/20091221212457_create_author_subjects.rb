@@ -18,8 +18,8 @@ class CreateAuthorSubjects < ActiveRecord::Migration
       t.integer :total_descendant, :default => 0
       t.integer :total_total, :default => 0
     end
-    add_index :author_subjects, [:bibliome_id, :author_id, :year]
-    add_index :author_subjects, [:bibliome_id, :subject_id, :year]
+    add_index :author_subjects, [:bibliome_id, :author_id, :subject_id, :year], :name => 'index_author_subjects_on_bibliome_author_subject_id_and_year'
+    add_index :author_subjects, [:bibliome_id, :subject_id, :author_id, :year], :name => 'index_author_subjects_on_bibliome_subject_author_id_and_year'
   end
 
   def self.down

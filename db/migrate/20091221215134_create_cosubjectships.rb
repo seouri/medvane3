@@ -9,7 +9,7 @@ class CreateCosubjectships < ActiveRecord::Migration
       t.integer :descendant, :default => 0
       t.integer :total, :default => 0
     end
-    add_index :cosubjectships, [:bibliome_id, :subject_id, :year]
+    add_index :cosubjectships, [:bibliome_id, :subject_id, :cosubject_id, :year], :name => 'index_cosubjectships_on_bibliome_subject_cosubject_id_and_year'
   end
 
   def self.down
