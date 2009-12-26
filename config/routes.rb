@@ -1,15 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :pubtypes
-
-  map.resources :subjects
-
-  map.resources :authors
-
-  map.resources :journals
-
-  map.resources :bibliomes
-
-  map.resources :articles
+  map.resources :bibliomes do |bibliomes|
+    bibliomes.resources :pubtypes
+    bibliomes.resources :subjects
+    bibliomes.resources :authors
+    bibliomes.resources :journals
+    bibliomes.resources :articles    
+  end
 
   map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}
   map.import '/build/import/:name', :controller => "build", :action => "import", :defaults => {:name => nil}

@@ -6,9 +6,7 @@
 
 <% @bibliomes.each do |bibliome| %>
   <tr>
-    <td><%= link_to 'Show', bibliome %></td>
-    <td><%= link_to 'Edit', edit_bibliome_path(bibliome) %></td>
-    <td><%= link_to 'Destroy', bibliome, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to bibliome.name, bibliome %></td>
   </tr>
 <% end %>
 </table>

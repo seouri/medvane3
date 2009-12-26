@@ -11,6 +11,8 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
 
   def perform
     bibliome = Bibliome.find(bibliome_id)
+    bibliome.started_at = Time.now
+    bibliome.save!
     #webenv, count = Medvane::Eutils.esearch(query)
     0.step(count.to_i, RETMAX) do |retstart|    
       medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")

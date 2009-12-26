@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20091223235108) do
     t.text     "query"
     t.integer  "articles_count", :default => 0
     t.boolean  "built",          :default => false
+    t.datetime "started_at"
     t.datetime "built_at"
     t.datetime "delete_at"
     t.datetime "created_at"

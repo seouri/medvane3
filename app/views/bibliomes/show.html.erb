@@ -1,3 +1,5 @@
+<h1><%= h(@bibliome.name) %></h1>
 
-<%= link_to 'Edit', edit_bibliome_path(@bibliome) %> |
-<%= link_to 'Back', bibliomes_path %>
+<ul>
+  <li><%= pluralize(@bibliome.articles_count, "Article") %></li>
+</ul>
