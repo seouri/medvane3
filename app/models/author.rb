@@ -1,4 +1,6 @@
 class Author < ActiveRecord::Base
+  has_many :bibliome_authors
+  has_many :bibliomes, :through => :bibliome_authors
   has_many :authorships
   has_many :articles, :through => :authorships
   has_many :author_journals

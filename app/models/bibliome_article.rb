@@ -1,4 +1,4 @@
-class ArticleBibliome < ActiveRecord::Base
+class BibliomeArticle < ActiveRecord::Base
   belongs_to :bibliome, :counter_cache => :articles_count
   belongs_to :article, :counter_cache => :bibliomes_count
   

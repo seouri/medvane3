@@ -1,9 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  article_id: 1
   bibliome_id: 1
+  subject_id: 1
+  one: 1
+  five: 1
+  ten: 1
+  all: 1
 
 two:
-  article_id: 1
   bibliome_id: 1
+  subject_id: 1
+  one: 1
+  five: 1
+  ten: 1
+  all: 1

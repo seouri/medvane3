@@ -9,14 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091223235108) do
-
-  create_table "article_bibliomes", :force => true do |t|
-    t.integer "article_id"
-    t.integer "bibliome_id"
-  end
-
-  add_index "article_bibliomes", ["bibliome_id", "article_id"], :name => "index_article_bibliomes_on_bibliome_id_and_article_id", :unique => true
+ActiveRecord::Schema.define(:version => 20091226023507) do
 
   create_table "article_types", :force => true do |t|
     t.integer "article_id"
@@ -108,10 +101,77 @@ ActiveRecord::Schema.define(:version => 20091223235108) do
   add_index "authorships", ["article_id", "position"], :name => "index_authorships_on_article_id_and_position"
   add_index "authorships", ["author_id"], :name => "index_authorships_on_author_id"
 
+  create_table "bibliome_articles", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "article_id"
+  end
+
+  add_index "bibliome_articles", ["bibliome_id"], :name => "index_bibliome_articles_on_bibliome_id"
+
+  create_table "bibliome_authors", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "author_id"
+    t.integer "one"
+    t.integer "five"
+    t.integer "ten"
+    t.integer "all"
+  end
+
+  add_index "bibliome_authors", ["bibliome_id"], :name => "index_bibliome_authors_on_bibliome_id"
+
+  create_table "bibliome_genes", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "gene_id"
+    t.integer "one"
+    t.integer "five"
+    t.integer "ten"
+    t.integer "all"
+  end
+
+  add_index "bibliome_genes", ["bibliome_id"], :name => "index_bibliome_genes_on_bibliome_id"
+
+  create_table "bibliome_journals", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "journal_id"
+    t.integer "one"
+    t.integer "five"
+    t.integer "ten"
+    t.integer "all"
+  end
+
+  add_index "bibliome_journals", ["bibliome_id"], :name => "index_bibliome_journals_on_bibliome_id"
+
+  create_table "bibliome_pubtypes", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "pubtype_id"
+    t.integer "one"
+    t.integer "five"
+    t.integer "ten"
+    t.integer "all"
+  end
+
+  add_index "bibliome_pubtypes", ["bibliome_id"], :name => "index_bibliome_pubtypes_on_bibliome_id"
+
+  create_table "bibliome_subjects", :force => true do |t|
+    t.integer "bibliome_id"
+    t.integer "subject_id"
+    t.integer "one"
+    t.integer "five"
+    t.integer "ten"
+    t.integer "all"
+  end
+
+  add_index "bibliome_subjects", ["bibliome_id"], :name => "index_bibliome_subjects_on_bibliome_id"
+
   create_table "bibliomes", :force => true do |t|
     t.string   "name"
     t.text     "query"
     t.integer  "articles_count", :default => 0
+    t.integer  "journals_count", :default => 0
+    t.integer  "authors_count",  :default => 0
+    t.integer  "subjects_count", :default => 0
+    t.integer  "genes_count",    :default => 0
+    t.integer  "pubtypes_count", :default => 0
     t.boolean  "built",          :default => false
     t.datetime "started_at"
     t.datetime "built_at"
