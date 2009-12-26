@@ -1,7 +1,7 @@
 require 'cgi'
 require 'net/http'
 require 'uri'
-
+require 'medline'
 # 1. get 5000 PMIDs for a given search
 # 2. select PMIDs not in Article
 # 3. fetch articles in step 2 in MEDLINE format
