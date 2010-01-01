@@ -110,6 +110,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           end
           
           # bibliome_authors
+          ## TODO: distinguish first/last/middle/total x one/five/ten/all
           ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_author_id(bibliome.id, author.id)
           ba.increment!(:all)
           ba.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS

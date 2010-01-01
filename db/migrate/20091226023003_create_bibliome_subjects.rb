@@ -8,7 +8,10 @@ class CreateBibliomeSubjects < ActiveRecord::Migration
       t.integer :ten, :default => 0
       t.integer :all, :default => 0
     end
-    add_index :bibliome_subjects, :bibliome_id
+    add_index :bibliome_subjects, [:bibliome_id, :one]
+    add_index :bibliome_subjects, [:bibliome_id, :five]
+    add_index :bibliome_subjects, [:bibliome_id, :ten]
+    add_index :bibliome_subjects, [:bibliome_id, :all]
   end
 
   def self.down

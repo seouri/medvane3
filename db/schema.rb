@@ -117,7 +117,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "all",         :default => 0
   end
 
-  add_index "bibliome_authors", ["bibliome_id"], :name => "index_bibliome_authors_on_bibliome_id"
+  add_index "bibliome_authors", ["bibliome_id", "all"], :name => "index_bibliome_authors_on_bibliome_id_and_all"
+  add_index "bibliome_authors", ["bibliome_id", "five"], :name => "index_bibliome_authors_on_bibliome_id_and_five"
+  add_index "bibliome_authors", ["bibliome_id", "one"], :name => "index_bibliome_authors_on_bibliome_id_and_one"
+  add_index "bibliome_authors", ["bibliome_id", "ten"], :name => "index_bibliome_authors_on_bibliome_id_and_ten"
 
   create_table "bibliome_genes", :force => true do |t|
     t.integer "bibliome_id"
@@ -128,7 +131,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "all",         :default => 0
   end
 
-  add_index "bibliome_genes", ["bibliome_id"], :name => "index_bibliome_genes_on_bibliome_id"
+  add_index "bibliome_genes", ["bibliome_id", "all"], :name => "index_bibliome_genes_on_bibliome_id_and_all"
+  add_index "bibliome_genes", ["bibliome_id", "five"], :name => "index_bibliome_genes_on_bibliome_id_and_five"
+  add_index "bibliome_genes", ["bibliome_id", "one"], :name => "index_bibliome_genes_on_bibliome_id_and_one"
+  add_index "bibliome_genes", ["bibliome_id", "ten"], :name => "index_bibliome_genes_on_bibliome_id_and_ten"
 
   create_table "bibliome_journals", :force => true do |t|
     t.integer "bibliome_id"
@@ -139,7 +145,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "all",         :default => 0
   end
 
-  add_index "bibliome_journals", ["bibliome_id"], :name => "index_bibliome_journals_on_bibliome_id"
+  add_index "bibliome_journals", ["bibliome_id", "all"], :name => "index_bibliome_journals_on_bibliome_id_and_all"
+  add_index "bibliome_journals", ["bibliome_id", "five"], :name => "index_bibliome_journals_on_bibliome_id_and_five"
+  add_index "bibliome_journals", ["bibliome_id", "one"], :name => "index_bibliome_journals_on_bibliome_id_and_one"
+  add_index "bibliome_journals", ["bibliome_id", "ten"], :name => "index_bibliome_journals_on_bibliome_id_and_ten"
 
   create_table "bibliome_pubtypes", :force => true do |t|
     t.integer "bibliome_id"
@@ -150,7 +159,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "all",         :default => 0
   end
 
-  add_index "bibliome_pubtypes", ["bibliome_id"], :name => "index_bibliome_pubtypes_on_bibliome_id"
+  add_index "bibliome_pubtypes", ["bibliome_id", "all"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_all"
+  add_index "bibliome_pubtypes", ["bibliome_id", "five"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_five"
+  add_index "bibliome_pubtypes", ["bibliome_id", "one"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_one"
+  add_index "bibliome_pubtypes", ["bibliome_id", "ten"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_ten"
 
   create_table "bibliome_subjects", :force => true do |t|
     t.integer "bibliome_id"
@@ -161,7 +173,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "all",         :default => 0
   end
 
-  add_index "bibliome_subjects", ["bibliome_id"], :name => "index_bibliome_subjects_on_bibliome_id"
+  add_index "bibliome_subjects", ["bibliome_id", "all"], :name => "index_bibliome_subjects_on_bibliome_id_and_all"
+  add_index "bibliome_subjects", ["bibliome_id", "five"], :name => "index_bibliome_subjects_on_bibliome_id_and_five"
+  add_index "bibliome_subjects", ["bibliome_id", "one"], :name => "index_bibliome_subjects_on_bibliome_id_and_one"
+  add_index "bibliome_subjects", ["bibliome_id", "ten"], :name => "index_bibliome_subjects_on_bibliome_id_and_ten"
 
   create_table "bibliomes", :force => true do |t|
     t.string   "name"
