@@ -1,26 +1,7 @@
-<h1>Listing authors</h1>
+<h1>Authors in <%= h(@bibliome.query) %></h1>
 
-<table>
-  <tr>
-    <th>Last name</th>
-    <th>Fore name</th>
-    <th>Initials</th>
-    <th>Suffix</th>
-  </tr>
-
-<% @authors.each do |author| %>
-  <tr>
-    <td><%=h author.last_name %></td>
-    <td><%=h author.fore_name %></td>
-    <td><%=h author.initials %></td>
-    <td><%=h author.suffix %></td>
-    <td><%= link_to 'Show', author %></td>
-    <td><%= link_to 'Edit', edit_author_path(author) %></td>
-    <td><%= link_to 'Destroy', author, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New author', new_author_path %>
+<ol>
+<% @authors.each do |author| -%>
+  <li><%= link_to(author.full_name, bibliome_author_path(@bibliome, author)) %></li>
+<% end -%>
+</ol>

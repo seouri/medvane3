@@ -6,11 +6,11 @@ class Bibliome < ActiveRecord::Base
   has_many :bibliome_authors
   has_many :authors, :through => :bibliome_authors
   has_many :bibliome_subjects
-  has_many :subjecst, :through => :bibliome_subjects
+  has_many :subjects, :through => :bibliome_subjects
   #has_many :bibliome_genes
   #has_many :genes, :through => :bibliome_genes
   has_many :bibliome_pubtypes
-  has_many :pubtpes, :through => :bibliome_pubtypes
+  has_many :pubtypes, :through => :bibliome_pubtypes
   has_many :author_journals
   has_many :coauthorships
   has_many :author_subjects

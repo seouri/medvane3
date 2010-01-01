@@ -1,20 +1,7 @@
-<h1>Listing pubtypes</h1>
+<h1>Pubtypes in <%= h(@bibliome.query) %></h1>
 
-<table>
-  <tr>
-    <th></th>
-  </tr>
-
-<% @pubtypes.each do |pubtype| %>
-  <tr>
-    <td><%=h pubtype. %></td>
-    <td><%= link_to 'Show', pubtype %></td>
-    <td><%= link_to 'Edit', edit_pubtype_path(pubtype) %></td>
-    <td><%= link_to 'Destroy', pubtype, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New pubtype', new_pubtype_path %>
+<ol>
+<% @pubtypes.each do |pubtype| -%>
+  <li><%= link_to(pubtype.term, bibliome_pubtype_path(@bibliome, pubtype))%></li>
+<% end -%>
+</ol>

@@ -15,7 +15,7 @@ class Author < ActiveRecord::Base
   validates_uniqueness_of :fore_name, :scope => [:last_name, :suffix]
   
   def full_name
-    #{last_name initials}
+    last_name + " " + initials
   end
   
   def merge_with(author)

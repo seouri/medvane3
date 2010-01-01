@@ -2,7 +2,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.xml
   def index
-    @subjects = Subject.all
+    @subjects = @bibliome.subjects.all
 
     respond_to do |format|
       format.html # index.html.erb
