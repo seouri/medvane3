@@ -8,6 +8,9 @@ require 'medline'
 # 4. repeat 1-3 until all articles are received
 class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
   RETMAX = 5000
+  ONE_YEAR_IN_SECONDS   = 365 * 24 * 60 * 60
+  FIVE_YEARS_IN_SECONDS = 5 * ONE_YEAR_IN_SECONDS
+  TEN_YEARS_IN_SECONDS  = 10 * ONE_YEAR_IN_SECONDS
 
   def perform
     bibliome = Bibliome.find(bibliome_id)
@@ -55,11 +58,16 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           end
           a.save!
         end
+        
+        article_age = (Time.now.to_time - a.pubdate.to_time).round
+        article_age = 0 if article_age < 0
 
         # bibliome_journals
         bj = BibliomeJournal.find_or_create_by_bibliome_id_and_journal_id(bibliome.id, journal.id)
         bj.increment!(:all)
-        ## one, five, ten
+        bj.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
+        bj.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
+        bj.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS
         
         authors.each_index do |i|
           author = authors[i]
@@ -104,7 +112,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           # bibliome_authors
           ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_author_id(bibliome.id, author.id)
           ba.increment!(:all)
-          ## one, five, ten
+          ba.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
+          ba.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
+          ba.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS
         end
 
         #bibliome.journal_pubtypes
@@ -115,8 +125,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           # bibliome_pubtypes
           bp = BibliomePubtype.find_or_create_by_bibliome_id_and_pubtype_id(bibliome.id, pubtype.id)
           bp.increment!(:all)
-          ## one, five, ten
-          
+          bp.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
+          bp.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
+          bp.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS          
         end
 
         #bibliome.journal_subject
@@ -143,8 +154,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           # TODO: update schema to distinguish direct/descendant
           bs = BibliomeSubject.find_or_create_by_bibliome_id_and_subject_id(bibliome.id, subject.id)
           bs.increment!(:all)
-          ## one, five, ten
-          
+          bs.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
+          bs.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
+          bs.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS          
         end
 
         ## journal_subject descendant
