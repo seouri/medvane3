@@ -2,7 +2,7 @@ class JournalsController < ApplicationController
   # GET /journals
   # GET /journals.xml
   def index
-    @journals = @bibliome.journals.all
+    @journals = @bibliome.journals.period("all")
 
     respond_to do |format|
       format.html # index.html.erb

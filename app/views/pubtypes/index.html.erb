@@ -1,7 +1,7 @@
 <h1>Pubtypes in <%= h(@bibliome.query) %></h1>
 
 <ol>
-<% @pubtypes.each do |pubtype| -%>
-  <li><%= link_to(pubtype.term, bibliome_pubtype_path(@bibliome, pubtype))%></li>
+<% @pubtypes.each do |p| -%>
+  <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype))%></li>
 <% end -%>
 </ol>

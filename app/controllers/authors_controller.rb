@@ -2,7 +2,7 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    @authors = @bibliome.authors.all
+    @authors = @bibliome.authors.period("all")
 
     respond_to do |format|
       format.html # index.html.erb

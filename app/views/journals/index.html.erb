@@ -1,7 +1,7 @@
-<h1>Journals</h1>
+<h1>Journals in <%= h(@bibliome.query) %></h1>
 
 <ol>
-<% @journals.each do |journal| -%>
-  <li><%= link_to(journal.abbr, bibliome_journal_path(@bibliome, journal)) %></td>
+<% @journals.each do |j| -%>
+  <li><%= link_to(j.journal.abbr, bibliome_journal_path(@bibliome, j.journal)) %></td>
 <% end -%>
 </ol>

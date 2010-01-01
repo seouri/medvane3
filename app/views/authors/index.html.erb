@@ -1,7 +1,7 @@
 <h1>Authors in <%= h(@bibliome.query) %></h1>
 
 <ol>
-<% @authors.each do |author| -%>
-  <li><%= link_to(author.full_name, bibliome_author_path(@bibliome, author)) %></li>
+<% @authors.each do |a| -%>
+  <li><%= link_to(a.author.full_name, bibliome_author_path(@bibliome, a.author)) %></li>
 <% end -%>
 </ol>

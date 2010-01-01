@@ -2,7 +2,7 @@ class PubtypesController < ApplicationController
   # GET /pubtypes
   # GET /pubtypes.xml
   def index
-    @pubtypes = @bibliome.pubtypes.all
+    @pubtypes = @bibliome.pubtypes.period("all")
 
     respond_to do |format|
       format.html # index.html.erb

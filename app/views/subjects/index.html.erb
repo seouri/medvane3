@@ -1,7 +1,7 @@
 <h1>Subjects in <%= h(@bibliome.query) %></h1>
 
 <ol>
-<% @subjects.each do |subject| -%>
-  <li><%= link_to(subject.term, bibliome_subject_path(@bibliome, subject)) %></li>
+<% @subjects.each do |s| -%>
+  <li><%= link_to(s.subject.term, bibliome_subject_path(@bibliome, s.subject)) %></li>
 <% end -%>
 </ol>
