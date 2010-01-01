@@ -2,7 +2,7 @@ class BibliomesController < ApplicationController
   # GET /bibliomes
   # GET /bibliomes.xml
   def index
-    @bibliomes = Bibliome.all
+    @bibliomes = Bibliome.built.all
 
     respond_to do |format|
       format.html # index.html.erb

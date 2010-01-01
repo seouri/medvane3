@@ -8,6 +8,7 @@ module Medvane::Eutils
   TOOL_EMAIL  = "eutils@medvane.org"
 
   def esearch(query)
+    #return "devmock", 191 if ENV["RAILS_ENV"] == "development"
     server = EUTILS_URL + "esearch.fcgi"
     params = {
       "db"          => "pubmed",
@@ -26,6 +27,12 @@ module Medvane::Eutils
   module_function :esearch
 
   def efetch(webenv, retstart = 0, retmax = 5000, rettype = "uilist")
+    if ENV["RAILS_ENV"] == "xdevelopment"
+      response = IO.read("#{RAILS_ROOT}/test/fixtures/kohane_i.medline")
+      medline = response.split(/\n\n+/).map {|e| Bio::MEDLINE.new(e) }
+      retmax = medline.index(medline.last) if medline.index(medline.last) < retmax
+      return medline[retstart .. retmax]
+    end
     server = EUTILS_URL + "efetch.fcgi"
     params = {
       "db"          => "pubmed",

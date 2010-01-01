@@ -27,6 +27,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
         authors = m.authors.map {|u| Author.find_or_create_by_last_name_and_fore_name_and_initials_and_suffix(u['last_name'], u['fore_name'], u['initials'], u['suffix'])}
         genes = []
         
+        # article
         if a.new_record?
           a.journal      = journal
           a.pubdate      = m.pubdate
@@ -55,6 +56,11 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           a.save!
         end
 
+        # bibliome_journals
+        bj = BibliomeJournal.find_or_create_by_bibliome_id_and_journal_id(bibliome.id, journal.id)
+        bj.increment!(:all)
+        ## one, five, ten
+        
         authors.each_index do |i|
           author = authors[i]
           position = position_name(i + 1, authors.size)
@@ -94,12 +100,23 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
             ap.increment!(position)
             ap.increment!(:total)
           end
+          
+          # bibliome_authors
+          ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_author_id(bibliome.id, author.id)
+          ba.increment!(:all)
+          ## one, five, ten
         end
 
         #bibliome.journal_pubtypes
         pubtypes.each do |pubtype|
           jp = JournalPubtype.find_or_create_by_bibliome_id_and_journal_id_and_pubtype_id_and_year(bibliome.id, journal.id, pubtype.id, m.year)
           jp.increment!(:articles)
+          
+          # bibliome_pubtypes
+          bp = BibliomePubtype.find_or_create_by_bibliome_id_and_pubtype_id(bibliome.id, pubtype.id)
+          bp.increment!(:all)
+          ## one, five, ten
+          
         end
 
         #bibliome.journal_subject
@@ -121,6 +138,13 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
             cs.increment!(:descendant)
             cs.increment!(:total)
           end
+          
+          # bibliome_subjects
+          # TODO: update schema to distinguish direct/descendant
+          bs = BibliomeSubject.find_or_create_by_bibliome_id_and_subject_id(bibliome.id, subject.id)
+          bs.increment!(:all)
+          ## one, five, ten
+          
         end
 
         ## journal_subject descendant
@@ -128,6 +152,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
           js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
           js.increment!(:descendant)
           js.increment!(:total)
+          # bibliome_subjects descendants
+          # TODO: update schema to distinguish direct/descendant
+          ## one, five, ten
         end
  
         bibliome.articles<<(a)

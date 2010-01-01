@@ -21,6 +21,7 @@ class Bibliome < ActiveRecord::Base
   
   validates_uniqueness_of :name
   
+  named_scope :built, :conditions => {:built => true}
   def status
     if built?
       "finished importing"
