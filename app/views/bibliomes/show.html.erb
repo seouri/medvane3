@@ -1,4 +1,4 @@
-<h1><%= h(@bibliome.name) %></h1>
+<h1><%= h(@bibliome.query) %></h1>
 
 <ul>
   <li><%= link_to(pluralize(number_with_delimiter(@bibliome.articles_count), "Article"), bibliome_articles_path(@bibliome)) %></li>

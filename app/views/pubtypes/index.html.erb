@@ -1,4 +1,4 @@
-<h1>Pubtypes in <%= h(@bibliome.query) %></h1>
+<h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
 
 <ol>
 <% @pubtypes.each do |p| -%>

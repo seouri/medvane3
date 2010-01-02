@@ -1,4 +1,4 @@
-<h1>Authors in <%= h(@bibliome.query) %></h1>
+<h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
 
 <ol>
 <% @authors.each do |a| -%>
