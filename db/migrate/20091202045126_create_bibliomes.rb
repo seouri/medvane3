@@ -9,7 +9,8 @@ class CreateBibliomes < ActiveRecord::Migration
       t.integer :subjects_count,  :default => 0
       t.integer :genes_count,     :default => 0
       t.integer :pubtypes_count,  :default => 0
-      t.integer :hits,             :default => 0
+      t.integer :total_articles,  :default => 0
+      t.integer :hits,            :default => 0
       t.boolean :built,           :default => false
       t.datetime :started_at
       t.datetime :built_at

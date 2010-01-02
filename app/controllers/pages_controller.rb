@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   def home
-    @recent = Bibliome.recent(:limit => 5)
-    @popular = Bibliome.popular(:limit => 5)
+    @recent = Bibliome.recent(5)
+    @popular = Bibliome.popular(5)
   end
 
   def about

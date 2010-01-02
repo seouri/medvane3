@@ -1,4 +1,8 @@
-<h1><%=h @bibliome.name %>: <%= @bibliome.status + " " + @bibliome.articles_count.to_s + " of " + @count.to_s + " articles in " + processing_time(@bibliome) %></h1>
+<h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
+
+<h2>Status</h2>
+
+<p><%= @bibliome.status + " " + @bibliome.articles_count.to_s + " of " + @bibliome.total_articles.to_s + " articles in " + processing_time(@bibliome) %></p>
 
 <table>
   <tr>

@@ -6,7 +6,7 @@ require 'medline'
 # 2. select PMIDs not in Article
 # 3. fetch articles in step 2 in MEDLINE format
 # 4. repeat 1-3 until all articles are received
-class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
+class PubmedImport < Struct.new(:bibliome_id, :webenv)
   RETMAX = 5000
   ONE_YEAR_IN_SECONDS   = 365 * 24 * 60 * 60
   FIVE_YEARS_IN_SECONDS = 5 * ONE_YEAR_IN_SECONDS
@@ -17,8 +17,15 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :count)
     bibliome.started_at = Time.now
     bibliome.save!
     #webenv, count = Medvane::Eutils.esearch(query)
-    0.step(count.to_i, RETMAX) do |retstart|    
+    0.step(bibliome.total_articles.to_i, RETMAX) do |retstart|    
       medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
+
+      unless medline.size == bibliome.total_articles.to_i # webenv expired
+        webenv, count = Medvane::Eutils.esearch(bibliome.query)
+        medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
+        bibliome.total_articles = count if count > bibliome.total_articles
+      end
+
       medline.each do |m|
         # http://www.nlm.nih.gov/bsd/mms/medlineelements.html
         a = Article.find_or_initialize_by_id(m.pmid)

@@ -76,3 +76,15 @@ a:hover {
 ol#results li {
   margin: 0.5em 0;
 }
+
+#bibliome_status {
+  padding: 1em;
+  border: 2px solid #913;
+  color: #913;
+  font-weight: bold;
+}
+
+.age {
+  font-size: 93%;
+  color: #666;
+}

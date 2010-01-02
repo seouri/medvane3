@@ -18,9 +18,10 @@ class BuildController < ApplicationController
     @bibliome = Bibliome.find_or_initialize_by_name(params[:name])
     if @bibliome.new_record? and q.blank? == false and webenv.blank? == false and @count.to_i > 1
       @bibliome.query = q
+      @bibliome.total_articles = @count
       @bibliome.save!
       priority = (50 / Math.log(@count)).to_i
-      Delayed::Job.enqueue(PubmedImport.new(@bibliome.id, webenv, @count), priority)
+      Delayed::Job.enqueue(PubmedImport.new(@bibliome.id, webenv), priority)
     end
   end
 
