@@ -1,2 +1,17 @@
 <% page_title("About") -%>
 <h1>About</h1>
+
+<h2>Background</h2>
+<p>Although, on average, more than 2,000 articles are added to <a href="http://pubmed.gov">MEDLINE/PubMed</a> daily and the total number of articles indexed is approaching 20 million, what the user views when searching PubMed is generally only a small number of retrieved articles. It is impossible to see the 'whole picture' or to see research trends. Most people rely on review articles for these purposes. Review articles are essentially an analysis of, at most, hundreds of articles that are manually selected by a domain expert.</p>
+
+<h2>Processing Method</h2>
+<p>To address these issues, we developed a fully automated system that analyzes MEDLINE data; builds a variety of interesting interrelationships among entities; and displays salient research trends over time. We have shown that our approach closely mirrors the information that is found in manually created review articles (1, 2). Originally, Medvane was available either as a predefined bibliome (e.g., the MEDLINE subset of all the publications by Harvard authors, or the subset of all publications about a specific topic, such as autism), or by request from developers who would use our scripts to download and analyse a given bibliome and serve the results through a web interface. This limited the number of people who could effectively use Medvane for their own purposes. To make Medvane accessible to anyone, we recently integrated all the necessary processes into a single web application that allows users to specify their own subsets of MEDLINE data. This has resulted in this free public website.</p>
+
+<h2>Server Run Time & Number of Users</h2>
+<p>Our first public release of Medvane was the Harvard-specific Medvane (<a href="http://harvard.medvane.org">http://harvard.medvane.org</a>). This has been running for more than 500 days, since August 2, 2008, and has served over 480,000 page views for about 90,000 unique visitors from 177 countries. It shows descriptive and quantitative history as well as recent trends of the biomedical research conducted by Harvard researchers over the past 40 years, published in some 220,000 articles.</p>
+
+<h2>Input Data</h2>
+<p>Users can now construct their personal bibliome through my.medvane.org in any arbitrary way by entering PubMed search query terms such as a single disease, multiple diseases, drugs, or a researcher name. Users can also upload lists of PubMed IDs if the article subset cannot be easily created by search keywords. This might be the case, for example, for all the articles from a specific institution or a specific country.</p>
+
+<h2>Output</h2>
+<p>The temporal network of metadata entities such as journal, author, subject, genes, etc. is represented in fully hyperlinked pages with graphical visualization.</p>
