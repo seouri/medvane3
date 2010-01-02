@@ -14,6 +14,22 @@
   </div><!-- #sample_search -->
 <% end -%>
 
+<% if !@recent.blank? -%>
 <h2>Recent Bibliomes</h2>
+<ul>
+  <% for item in @recent -%>
+  <li><%= link_to(h(item.query), bibliome_path(item))%></li>
+  <% end -%>
+</ul>
+<%= link_to("See more recent bibliomes", recent_bibliomes_path) %>
+<% end -%>
 
+<% if !@popular.blank? -%>
 <h2>Popular Bibliomes</h2>
+<ul>
+  <% for item in @popular -%>
+  <li><%= link_to(h(item.query), bibliome_path(item))%></li>
+  <% end -%>
+</ul>
+<%= link_to("See more popular bibliomes", popular_bibliomes_path) %>
+<% end -%>

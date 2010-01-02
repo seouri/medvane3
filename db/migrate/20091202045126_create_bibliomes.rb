@@ -9,6 +9,7 @@ class CreateBibliomes < ActiveRecord::Migration
       t.integer :subjects_count,  :default => 0
       t.integer :genes_count,     :default => 0
       t.integer :pubtypes_count,  :default => 0
+      t.integer :hits,             :default => 0
       t.boolean :built,           :default => false
       t.datetime :started_at
       t.datetime :built_at
@@ -16,6 +17,8 @@ class CreateBibliomes < ActiveRecord::Migration
       t.timestamps
     end
     add_index :bibliomes, :name, :unique => true
+    add_index :bibliomes, [:built, :built_at]
+    add_index :bibliomes, :hits
   end
 
   def self.down

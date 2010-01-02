@@ -6,6 +6,13 @@ body {
   margin: 0;
   padding: 0;
 }
+
+a, a:visited {
+  color: #913;
+}
+a:hover {
+  color: #ea1;
+}
 #hd {
   margin: 0 -0.8em 0 -0.8em;
   padding: 0.1em 0.8em 0.25em 0.8em;
@@ -38,7 +45,7 @@ body {
 
 #bd h1 {
   margin: 0 -0.6em 0.5em -0.6em;
-  padding: 0 0.6em;
+  padding: 0.1em 0.6em;
   background-color: #333;
   color: #ccc;
 }

@@ -16,12 +16,20 @@ class Bibliome < ActiveRecord::Base
   
   validates_uniqueness_of :name
   
-  named_scope :built, :conditions => {:built => true}
+  named_scope :built, :conditions => { :built => true }
+  named_scope :recent, :conditions => { :built => true }, :order => "built_at desc"
+  named_scope :popular, :conditions => { :built => true }, :order => "hits desc"
+
   def status
     if built?
       "finished importing"
     else
       "imported"
     end
+  end
+
+  def hit!
+    self.delete_at = 2.weeks.from_now
+    self.increment! :hits
   end
 end

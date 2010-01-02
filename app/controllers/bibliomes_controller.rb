@@ -1,6 +1,4 @@
 class BibliomesController < ApplicationController
-  # GET /bibliomes
-  # GET /bibliomes.xml
   def index
     @bibliomes = Bibliome.built.all
 
@@ -10,10 +8,23 @@ class BibliomesController < ApplicationController
     end
   end
 
-  # GET /bibliomes/1
-  # GET /bibliomes/1.xml
+  def recent
+    @bibliomes = Bibliome.recent
+    respond_to do |format|
+      format.html { render :action => "index" }
+    end
+  end
+
+  def popular
+    @bibliomes = Bibliome.popular
+    respond_to do |format|
+      format.html { render :action => "index" }
+    end
+  end
+
   def show
     @bibliome = Bibliome.find(params[:id])
+    @bibliome.hit!
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,8 +32,6 @@ class BibliomesController < ApplicationController
     end
   end
 
-  # GET /bibliomes/new
-  # GET /bibliomes/new.xml
   def new
     @bibliome = Bibliome.new
 
@@ -32,13 +41,10 @@ class BibliomesController < ApplicationController
     end
   end
 
-  # GET /bibliomes/1/edit
   def edit
     @bibliome = Bibliome.find(params[:id])
   end
 
-  # POST /bibliomes
-  # POST /bibliomes.xml
   def create
     @bibliome = Bibliome.new(params[:bibliome])
 
@@ -54,8 +60,6 @@ class BibliomesController < ApplicationController
     end
   end
 
-  # PUT /bibliomes/1
-  # PUT /bibliomes/1.xml
   def update
     @bibliome = Bibliome.find(params[:id])
 
@@ -71,8 +75,6 @@ class BibliomesController < ApplicationController
     end
   end
 
-  # DELETE /bibliomes/1
-  # DELETE /bibliomes/1.xml
   def destroy
     @bibliome = Bibliome.find(params[:id])
     @bibliome.destroy

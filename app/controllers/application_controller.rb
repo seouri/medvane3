@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
 
 private
   def find_bibliome
-    @bibliome = Bibliome.find(params[:bibliome_id]) if params[:bibliome_id]
+    if params[:bibliome_id]
+      @bibliome = Bibliome.find(params[:bibliome_id])
+      @bibliome.hit!
+    end
   end
 end
