@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   before_filter :find_bibliome
   helper :all # include all helpers, all the time
+  helper_method :is_iphone_request?
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
