@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  def is_iphone_request?
+    request.user_agent =~ /(Mobile\/.+Safari)/
+  end
+
 private
   def find_bibliome
     @bibliome = Bibliome.find(params[:bibliome_id]) if params[:bibliome_id]
