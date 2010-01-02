@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => "pages", :action => "home"
   map.about '/about', :controller => "pages", :action => "about"
-  map.about '/help', :controller => "pages", :action => "help"
+  map.help '/help', :controller => "pages", :action => "help"
 
   map.resources :bibliomes do |bibliomes|
     bibliomes.resources :pubtypes

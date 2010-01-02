@@ -2,13 +2,40 @@
   red: #913
   yellow: #ea1
 */
-#ft {
-  margin: 1em 0;
-  padding: 0.25em 0;
-  border-top: 1px solid #333;
-  font-color: #333;
-  font-size: 77%;
+body {
+  margin: 0 0.1em;
 }
+#hd {
+  padding: 0.1em 0.25em 0.25em 0;
+  margin-bottom: 0.5em;
+  background-color: #ccc;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px
+}
+#toolbar {
+  display: inline;
+  margin: 0 0.25em;
+}
+#toolbar li {
+  width: 10em;
+  list-style: none;
+  display: inline;
+  padding: 0.25em;
+  font-weight: bold;
+  color: #913;
+}
+#toolbar a, #toolbar a:visited {
+  color: #000;
+  text-decoration: none;
+}
+#toolbar a:hover {
+  color: #913;
+  text-decoration: underline;
+}
+#bd {
+  min-height: 20em;
+}
+
 #results_info {
   margin: 1em 0;
   padding: 0.25em;
@@ -16,11 +43,10 @@
 }
 
 #pubmed_search_q {
-  width: 15em;
+  width: 10em;
   font-size: 146.5%;
 }
 #pubmed_search_submit, #build_bibliome_submit {
-  width: 12em;
   font-size: 146.5%;
 }
 ol#results li {
