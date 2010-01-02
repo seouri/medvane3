@@ -3,23 +3,26 @@
   <%= text_field_tag('q', @q, :id => "pubmed_search_q") %>
   <%= hidden_field_tag('count', @count, :name => nil) %>
   <%= submit_tag "Search PubMed", :name => nil, :disable_with => "Searching PubMed ...", :id => "pubmed_search_submit" %>
-<% end %>
+<% end -%>
   
-<% if @count > 0 %>
+<% if @count > 0 -%>
 <div id="results_info">Results: <strong>1</strong> to <strong><%= @show_count %></strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
 <ol id="results">
-<% for m in @medline do %>
-  <li id="pmid_<%= m.pmid %>"><%= m.title %><br/><%= m.pubmed['AU']%><br/><%= m.so %></li>
-<% end%>
+<% for m in @medline do -%>
+  <li id="pmid_<%= m.pmid %>" class="citation"><span class="title"><%= m.title %></span><br/><span class="authors"><%= m.pubmed['AU'].split(/\n/).join(", ")%></span><br/><span class="source"><%= m.so %></span></li>
+<% end -%>
 </ol>
-<% if @count > 1 %>
+
+<% if @count > 1 -%>
 <% form_tag import_path(:name => @bibliome_name), :method => "get" do %>
   <%= hidden_field_tag('q', @q) %>
   <%= hidden_field_tag('c', @count) %>
   <%= hidden_field_tag('w', @webenv) %>
   <%= submit_tag "Build your bibliome", :name => nil, :disable_with => "Building your bibliome ..." , :id => "build_bibliome_submit" %>
-<% end %>
-<% else %>
+<% end -%>
+<% else -%>
 We need more than 1 article to build a bibliome. Let's try another search keyword!
-<% end %>
-<% end %>
+<% end -%>
+<% elsif @q.blank? == false -%>
+<div id="results_info"><strong><%=h @q %></strong> was not found in PubMed.</div>
+<% end -%>

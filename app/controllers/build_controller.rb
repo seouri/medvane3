@@ -5,9 +5,11 @@ class BuildController < ApplicationController
     @count = 0
     unless @q.blank?
       @webenv, @count = Medvane::Eutils.esearch(@q)
-      @medline = Medvane::Eutils.efetch(@webenv, 0, 5, "medline")
-      @show_count = @count < 5 ? @count : 5
-      @bibliome_name = Digest::MD5.hexdigest(Time.now.to_f.to_s + @q)
+      if @count > 0
+        @medline = Medvane::Eutils.efetch(@webenv, 0, 5, "medline")
+        @show_count = @count < 5 ? @count : 5
+        @bibliome_name = Digest::MD5.hexdigest(Time.now.to_f.to_s + @q)
+      end
     end
   end
 
