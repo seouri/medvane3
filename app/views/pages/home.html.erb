@@ -1,5 +1,5 @@
 <% page_title("Home") -%>
-<h1>Medvane: Biomedical Research at a Glance</h1>
+<h1>Biomedical Research at a Glance</h1>
 
 <h2>Build Your Own Bibliome</h2>
 
@@ -7,6 +7,11 @@
   <%= text_field_tag('q', @q, :id => "pubmed_search_q") %>
   <%= hidden_field_tag('count', @count, :name => nil) %>
   <%= submit_tag "Search PubMed", :name => nil, :disable_with => "Searching PubMed ...", :id => "pubmed_search_submit" %>
+  <div id="sample_search">
+    Try these queries: 
+    <%= link_to("autistic disorder[mesh]", pubmed_path(:q => "autistic disorder[mesh]"))%>
+    <%= link_to("plos med[jour]", pubmed_path(:q => "plos med[jour]"))%>
+  </div><!-- #sample_search -->
 <% end -%>
 
 <h2>Recent Bibliomes</h2>
