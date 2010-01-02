@@ -1,10 +1,10 @@
 <h1><%= h(@bibliome.name) %></h1>
 
 <ul>
-  <li><%= link_to(pluralize(@bibliome.articles_count, "Article"), bibliome_articles_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(@bibliome.journals_count, "Journal"), bibliome_journals_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(@bibliome.authors_count, "Author"), bibliome_authors_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(@bibliome.subjects_count, "Subject"), bibliome_subjects_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(@bibliome.genes_count, "Gene"), bibliome_genes_path(@bibliome)) if false %></li>
-  <li><%= link_to(pluralize(@bibliome.pubtypes_count, "Pubtype"), bibliome_pubtypes_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.articles_count), "Article"), bibliome_articles_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.journals_count), "Journal"), bibliome_journals_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.authors_count), "Author"), bibliome_authors_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.subjects_count), "Subject"), bibliome_subjects_path(@bibliome)) %></li>
+  <!--li><%= link_to(pluralize(number_with_delimiter(@bibliome.genes_count), "Gene"), bibliome_genes_path(@bibliome)) if false %></li-->
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.pubtypes_count), "Pubtype"), bibliome_pubtypes_path(@bibliome)) %></li>
 </ul>
