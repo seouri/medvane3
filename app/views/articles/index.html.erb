@@ -1,7 +1,7 @@
 <h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
-
+<h2>Articles</h2>
 <ol>
 <% @articles.each do |article| %>
-  <li class="citation"><div class="title"><%= article.title %></div><div class="authors"><%= article.authors.map {|a| a.init_name}.join(", ")%></div><div class="source"><%= article.source %></div></li>
+  <li class="citation"><div class="title"><%= article.title %></div><div class="authors"><%= article.authors.map {|a| link_to(a.init_name, bibliome_author_path(@bibliome, a))}.join(", ")%></div><div class="source"><%= link_to(article.source, bibliome_journal_path(@bibliome, article.journal_id)) %></div></li>
 <% end -%>
 </ol>
