@@ -1,7 +1,9 @@
 <h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
 <h2>Pubtypes</h2>
+<%= page_entries_info @pubtypes %>
 <ol>
 <% @pubtypes.each do |p| -%>
   <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype))%> <span class="count">(<%= p.all %>)</span></li>
 <% end -%>
 </ol>
+<%= will_paginate @pubtypes %>

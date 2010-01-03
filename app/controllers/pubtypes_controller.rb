@@ -2,7 +2,7 @@ class PubtypesController < ApplicationController
   # GET /pubtypes
   # GET /pubtypes.xml
   def index
-    @pubtypes = @bibliome.pubtypes.period("all")
+    @pubtypes = @bibliome.pubtypes.period("all").paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
