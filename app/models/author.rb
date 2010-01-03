@@ -15,9 +15,13 @@ class Author < ActiveRecord::Base
   validates_uniqueness_of :fore_name, :scope => [:last_name, :suffix]
   
   def full_name
-    ((last_name || "") + " " + (initials || "")).strip
+    ["#{last_name || ""}", "#{fore_name || ""}"].join(", ")
   end
-  
+
+  def init_name
+    ["#{last_name || ""}", "#{initials || ""}"].join(" ")
+  end
+
   def merge_with(author)
     
   end

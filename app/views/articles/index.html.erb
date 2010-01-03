@@ -2,6 +2,6 @@
 
 <ol>
 <% @articles.each do |article| %>
-  <li class="citation"><div class="title"><%= link_to article.title, bibliome_article_path(@bibliome, article) %></div><div class="authors"><%= article.authors.map {|a| a.full_name}.join(", ")%></div><div class="source"><%= article.source %></div></li>
+  <li class="citation"><div class="title"><%= link_to article.title, bibliome_article_path(@bibliome, article) %></div><div class="authors"><%= article.authors.map {|a| a.init_name}.join(", ")%></div><div class="source"><%= article.source %></div></li>
 <% end -%>
 </ol>

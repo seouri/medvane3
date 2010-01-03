@@ -45,6 +45,7 @@ module Bio
       @pubmed['JT'].gsub(/\s+/, ' ').strip
     end
     
+    #TODO: PMID:12895469, Edyta-Krzymanska-Olejnik only last name. AU/FAU don't match
     def authors
       authors = []
       @pubmed['AU'].strip.split(/\n/).each do |author|
@@ -61,6 +62,13 @@ module Bio
           "suffix" => suffix,
         }
         authors.push(author)
+      end
+      fau = @pubmed['FAU'].strip.split(/\n/)
+      fau.each_index do |index|
+        last = authors[index]["last_name"]
+        suffix = authors[index]["suffix"]
+        fore = fau[index].gsub(/^#{last},\s+/, "").gsub(/\s+#{suffix}$/, "")
+        authors[index]["fore_name"] = fore
       end
       return authors
     end
