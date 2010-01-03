@@ -25,6 +25,7 @@
   })();
 </script>
 <% end -%>
+<% if yield(:has_chart) -%><%= javascript_include_tag "protovis-r3.1" %><% end -%>
 </head>
 <body>
 <div id="doc3" class="yui-t7">
