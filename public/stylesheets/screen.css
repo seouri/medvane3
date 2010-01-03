@@ -84,8 +84,8 @@ ol#results li {
   font-weight: bold;
 }
 
-.age {
-  font-size: 93%;
+.age, .count {
+  font-size: 85%;
   color: #666;
 }
 

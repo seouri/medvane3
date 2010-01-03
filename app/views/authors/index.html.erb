@@ -2,6 +2,6 @@
 
 <ol>
 <% @authors.each do |a| -%>
-  <li><%= link_to(a.author.full_name, bibliome_author_path(@bibliome, a.author)) %></li>
+  <li><%= link_to(a.author.full_name, bibliome_author_path(@bibliome, a.author)) %> <span class="count">(<%= a.all %>)</span></li>
 <% end -%>
 </ol>

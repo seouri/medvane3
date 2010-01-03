@@ -2,6 +2,6 @@
 
 <ol>
 <% @pubtypes.each do |p| -%>
-  <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype))%></li>
+  <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype))%> <span class="count">(<%= p.all %>)</span></li>
 <% end -%>
 </ol>
