@@ -1,9 +1,9 @@
 <h1>Bibliomes</h1>
-
+<%= page_entries_info @bibliomes %>
 <ul>
   <% for item in @bibliomes -%>
   <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= time_ago_in_words(item.built_at)%> ago)</span></li>
   <% end -%>
 </ul>
-
+<%= will_paginate @bibliomes %>
 <%= link_to 'New bibliome', new_bibliome_path %>

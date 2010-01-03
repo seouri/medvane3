@@ -1,6 +1,6 @@
 class BibliomesController < ApplicationController
   def index
-    @bibliomes = Bibliome.built.all
+    @bibliomes = Bibliome.built.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -9,14 +9,14 @@ class BibliomesController < ApplicationController
   end
 
   def recent
-    @bibliomes = Bibliome.recent
+    @bibliomes = Bibliome.recent.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html { render :action => "index" }
     end
   end
 
   def popular
-    @bibliomes = Bibliome.popular
+    @bibliomes = Bibliome.popular.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html { render :action => "index" }
     end
