@@ -13,6 +13,9 @@ a, a:visited {
 a:hover {
   color: #ea1;
 }
+li {
+  margin-bottom: 0.25em;
+}
 #hd {
   margin: 0 -0.8em 0 -0.8em;
   padding: 0.1em 0.8em 0.25em 0.8em;
