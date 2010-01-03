@@ -89,6 +89,9 @@ ol#results li {
   color: #666;
 }
 
+.citation {
+  margin-bottom: 1em;
+}
 .citation .title {
   font-size: 108%;
   font-weight: bold;

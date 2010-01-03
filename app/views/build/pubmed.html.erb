@@ -9,7 +9,7 @@
 <div id="results_info">Results: <strong>1</strong> to <strong><%= @show_count %></strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
 <ol id="results">
 <% for m in @medline do -%>
-  <li id="pmid_<%= m.pmid %>" class="citation"><span class="title"><%= m.title %></span><br/><span class="authors"><%= m.pubmed['AU'].split(/\n/).join(", ")%></span><br/><span class="source"><%= m.so %></span></li>
+  <li id="pmid_<%= m.pmid %>" class="citation"><div class="title"><%= m.title %></div><div class="authors"><%= m.pubmed['AU'].split(/\n/).join(", ")%></div><div class="source"><%= m.so %></div></li>
 <% end -%>
 </ol>
 
