@@ -1,13 +1,2 @@
-<p>
-  <b>Title:</b>
-  <%=h @journal.title %>
-</p>
-
-<p>
-  <b>Abbr:</b>
-  <%=h @journal.abbr %>
-</p>
-
-
-<%= link_to 'Edit', edit_journal_path(@journal) %> |
-<%= link_to 'Back', journals_path %>
+<% page_title(@journal.abbr + " | " + @bibliome.query)%>
+<h2><%=h @journal.title %></h2>

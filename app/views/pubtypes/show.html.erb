@@ -1,8 +1,2 @@
-<p>
-  <b>:</b>
-  <%=h @pubtype. %>
-</p>
-
-
-<%= link_to 'Edit', edit_pubtype_path(@pubtype) %> |
-<%= link_to 'Back', pubtypes_path %>
+<% page_title(@pubtype.term + " | " + @bibliome.query)%>
+<h2><%= @pubtype.term %></h2>
