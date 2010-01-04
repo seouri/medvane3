@@ -17,7 +17,7 @@
 <h2>Recent Bibliomes</h2>
 <ul>
   <% for item in @recent -%>
-  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= time_ago_in_words(item.built_at)%> ago)</span></li>
+  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= item.total_articles %> articles, <%= age(item) %>)</span></li>
   <% end -%>
 </ul>
 <%= link_to("See more recent bibliomes", recent_bibliomes_path) %>
@@ -27,7 +27,7 @@
 <h2>Popular Bibliomes</h2>
 <ul>
   <% for item in @popular -%>
-  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= time_ago_in_words(item.built_at)%> ago)</span></li>
+  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= item.total_articles %> articles, <%= age(item) %>)</span></li>
   <% end -%>
 </ul>
 <%= link_to("See more popular bibliomes", popular_bibliomes_path) %>

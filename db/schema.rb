@@ -187,6 +187,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer  "subjects_count", :default => 0
     t.integer  "genes_count",    :default => 0
     t.integer  "pubtypes_count", :default => 0
+    t.integer  "total_articles", :default => 0
+    t.integer  "hits",           :default => 0
     t.boolean  "built",          :default => false
     t.datetime "started_at"
     t.datetime "built_at"
@@ -195,6 +197,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.datetime "updated_at"
   end
 
+  add_index "bibliomes", ["built", "built_at"], :name => "index_bibliomes_on_built_and_built_at"
+  add_index "bibliomes", ["hits"], :name => "index_bibliomes_on_hits"
   add_index "bibliomes", ["name"], :name => "index_bibliomes_on_name", :unique => true
 
   create_table "coauthorships", :force => true do |t|

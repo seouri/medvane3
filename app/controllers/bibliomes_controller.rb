@@ -39,6 +39,7 @@ class BibliomesController < ApplicationController
     @count = 0
     unless @q.blank?
       @webenv, @count = Medvane::Eutils.esearch(@q)
+      @bibliomes = Bibliome.find_all_by_query_and_total_articles(@q, @count)
       if @count > 0
         @medline = Medvane::Eutils.efetch(@webenv, 0, 5, "medline")
         @show_count = @count < 5 ? @count : 5

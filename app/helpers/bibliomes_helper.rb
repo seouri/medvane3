@@ -19,4 +19,12 @@ module BibliomesHelper
     from_time = bibliome.started_at || Time.now
     distance_of_time_in_words(from_time, to_time, true)
   end
+
+  def age(bibliome)
+    if bibliome.built?
+      time_ago_in_words(bibliome.built_at) + " ago"
+    else
+      "in process"
+    end
+  end
 end

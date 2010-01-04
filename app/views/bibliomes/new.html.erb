@@ -6,6 +6,13 @@
 <% end -%>
   
 <% if @count > 0 -%>
+<% if @bibliomes.size > 0 -%>
+  <ul>
+    <% for item in @bibliomes -%>
+    <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= item.total_articles %> articles, <%= age(item) %>)</span></li>
+    <% end -%>
+  </ul>
+<% end -%>
 <div id="results_info">Results: <strong>1</strong> to <strong><%= @show_count %></strong> of <strong><%= number_with_delimiter(@count) %></strong> for <strong><%=h @q %></strong></div>
 <ol id="results">
 <% for m in @medline do -%>
