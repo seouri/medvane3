@@ -1,4 +1,4 @@
-<h1>Build Your Own Bibliome</h1>
+<% page_title("Build Your Own Bibliome")%>
 <% form_tag new_bibliome_path, :method => "get", :id => "pubmed_search" do %>
   <%= text_field_tag('q', @q, :id => "pubmed_search_q") %>
   <%= hidden_field_tag('count', @count, :name => nil) %>

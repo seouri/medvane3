@@ -39,6 +39,11 @@
 </div><!-- #hd -->
 <div id="bd" role="main">
 <div class="yui-g">
+<% if @bibliome -%>
+<h1><%= link_to(h(@bibliome.query), bibliome_path(@bibliome)) %></h1>
+<% else -%>
+<h1><%= yield(:title) %></h1>
+<% end -%>
 <%= yield %>
 </div><!-- .yui-g -->
 </div><!-- #bd -->

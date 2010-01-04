@@ -1,7 +1,7 @@
 class BibliomesController < ApplicationController
   def index
     @bibliomes = Bibliome.built.paginate(:page => params[:page], :per_page => 10)
-
+    @prefix = "All "
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @bibliomes }
@@ -10,6 +10,7 @@ class BibliomesController < ApplicationController
 
   def recent
     @bibliomes = Bibliome.recent.paginate(:page => params[:page], :per_page => 10)
+    @prefix = "Recent "
     respond_to do |format|
       format.html { render :action => "index" }
     end
@@ -17,6 +18,7 @@ class BibliomesController < ApplicationController
 
   def popular
     @bibliomes = Bibliome.popular.paginate(:page => params[:page], :per_page => 10)
+    @prefix = "Popular "
     respond_to do |format|
       format.html { render :action => "index" }
     end
@@ -33,7 +35,6 @@ class BibliomesController < ApplicationController
   end
 
   def new
-    @bibliome = Bibliome.new
     @q = params[:q]
     @count = 0
     unless @q.blank?
