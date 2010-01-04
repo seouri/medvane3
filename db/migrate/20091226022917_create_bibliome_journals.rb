@@ -3,15 +3,11 @@ class CreateBibliomeJournals < ActiveRecord::Migration
     create_table :bibliome_journals do |t|
       t.integer :bibliome_id
       t.integer :journal_id
-      t.integer :one, :default => 0
-      t.integer :five, :default => 0
-      t.integer :ten, :default => 0
-      t.integer :all, :default => 0
+      t.string :year
+      t.integer :articles_count, :default => 0
     end
-    add_index :bibliome_journals, [:bibliome_id, :one]
-    add_index :bibliome_journals, [:bibliome_id, :five]
-    add_index :bibliome_journals, [:bibliome_id, :ten]
-    add_index :bibliome_journals, [:bibliome_id, :all]
+    add_index :bibliome_journals, [:bibliome_id, :articles_count]
+    add_index :bibliome_journals, [:bibliome_id, :year, :journal_id]
   end
 
   def self.down

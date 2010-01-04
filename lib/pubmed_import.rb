@@ -30,10 +30,11 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
       end
 
       medline.each do |m|
-        unless article_ids.include?(m.pmid) # do this way rather than medline.reject!{...}.each to save memory
+        unless article_ids.include?(m.pmid.to_i) # do this way rather than medline.reject!{...}.each to save memory
           # http://www.nlm.nih.gov/bsd/mms/medlineelements.html
           a = Article.find_or_initialize_by_id(m.pmid)
 
+          periods = periods(m.pubdate)
           journal = Journal.find_or_create_by_abbr_and_title(m.ta, m.jt)
           subjects = m.major_descriptors.map {|d| Subject.find_by_term(d)}
           ancestors = subjects.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s)}
@@ -74,11 +75,10 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
           article_age = 0 if article_age < 0
 
           # bibliome_journals
-          bj = BibliomeJournal.find_or_create_by_bibliome_id_and_journal_id(bibliome.id, journal.id)
-          bj.increment!(:all)
-          bj.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
-          bj.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
-          bj.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS
+          periods.each do |year|
+            bj = BibliomeJournal.find_or_create_by_bibliome_id_and_year_and_journal_id(bibliome.id, year, journal.id)
+            bj.increment!(:articles_count)
+          end
         
           authors.each_index do |i|
             author = authors[i]
@@ -122,11 +122,10 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
           
             # bibliome_authors
             ## TODO: distinguish first/last/middle/total x one/five/ten/all
-            ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_author_id(bibliome.id, author.id)
-            ba.increment!(:all)
-            ba.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
-            ba.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
-            ba.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS
+            periods.each do |year|
+              ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_year_and_author_id(bibliome.id, year, author.id)
+              ba.increment!(:articles_count)
+            end
           end
 
           #bibliome.journal_pubtypes
@@ -135,11 +134,10 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
             jp.increment!(:articles)
           
             # bibliome_pubtypes
-            bp = BibliomePubtype.find_or_create_by_bibliome_id_and_pubtype_id(bibliome.id, pubtype.id)
-            bp.increment!(:all)
-            bp.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
-            bp.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
-            bp.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS          
+            periods.each do |year|
+              bp = BibliomePubtype.find_or_create_by_bibliome_id_and_year_and_pubtype_id(bibliome.id, year, pubtype.id)
+              bp.increment!(:articles_count)
+            end
           end
 
           #bibliome.journal_subject
@@ -164,11 +162,10 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
           
             # bibliome_subjects
             # TODO: update schema to distinguish direct/descendant
-            bs = BibliomeSubject.find_or_create_by_bibliome_id_and_subject_id(bibliome.id, subject.id)
-            bs.increment!(:all)
-            bs.increment!(:one) if article_age <= ONE_YEAR_IN_SECONDS
-            bs.increment!(:five) if article_age <= FIVE_YEARS_IN_SECONDS
-            bs.increment!(:ten) if article_age <= TEN_YEARS_IN_SECONDS          
+            periods.each do |year|
+              bs = BibliomeSubject.find_or_create_by_bibliome_id_and_year_and_subject_id(bibliome.id, year, subject.id)
+              bs.increment!(:articles_count)
+            end
           end
 
           ## journal_subject descendant
@@ -181,12 +178,19 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
             ## one, five, ten
           end
  
-          bibliome.articles<<(a)
+          bibliome.bibliome_articles.create(:article_id => a.id, :pubdate => a.pubdate)
           bibliome.save!
         end
       end
     end
 
+    ["all", "one", "five", "ten"].each do |period|
+      ["journals", "authors", "subjects", "pubtypes"].each do |obj| #TODO: genes
+        col = "#{period}_#{obj}_count"
+        val = bibliome.send(obj).period(period).count
+        bibliome.update_attribute(col, val)
+      end
+    end
     bibliome.built = true
     bibliome.built_at = Time.now
     bibliome.delete_at = 2.weeks.from_now
@@ -201,5 +205,15 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
     else
       return "middle"
     end
+  end
+
+  def periods(pubdate)
+    article_age = (Time.now.to_time - pubdate.to_time).round
+    article_age = 0 if article_age < 0
+    periods = [pubdate[0, 4], "all"]
+    periods.push("one")   if article_age <= ONE_YEAR_IN_SECONDS
+    periods.push("five")  if article_age <= FIVE_YEARS_IN_SECONDS
+    periods.push("ten")   if article_age <= TEN_YEARS_IN_SECONDS
+    return periods
   end
 end

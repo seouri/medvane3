@@ -3,11 +3,11 @@
 <% if @bibliome.built? -%>
 <ul>
   <li><%= link_to(pluralize(number_with_delimiter(@bibliome.articles_count), "Article"), bibliome_articles_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.journals_count), "Journal"), bibliome_journals_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.authors_count), "Author"), bibliome_authors_path(@bibliome)) %></li>
-  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.subjects_count), "Subject"), bibliome_subjects_path(@bibliome)) %></li>
-  <!--li><%= link_to(pluralize(number_with_delimiter(@bibliome.genes_count), "Gene"), bibliome_genes_path(@bibliome)) if false %></li-->
-  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.pubtypes_count), "Pubtype"), bibliome_pubtypes_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.all_journals_count), "Journal"), bibliome_journals_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.all_authors_count), "Author"), bibliome_authors_path(@bibliome)) %></li>
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.all_subjects_count), "Subject"), bibliome_subjects_path(@bibliome)) %></li>
+  <!--li><%= link_to(pluralize(number_with_delimiter(@bibliome.all_genes_count), "Gene"), bibliome_genes_path(@bibliome)) if false %></li-->
+  <li><%= link_to(pluralize(number_with_delimiter(@bibliome.all_pubtypes_count), "Pubtype"), bibliome_pubtypes_path(@bibliome)) %></li>
 </ul>
 <div class="age">Built <%= time_ago_in_words(@bibliome.built_at)%> ago, will be deleted in 2 weeks from now if there is no access.</div>
 <% end -%>

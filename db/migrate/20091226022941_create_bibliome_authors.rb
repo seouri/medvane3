@@ -3,15 +3,11 @@ class CreateBibliomeAuthors < ActiveRecord::Migration
     create_table :bibliome_authors do |t|
       t.integer :bibliome_id
       t.integer :author_id
-      t.integer :one, :default => 0
-      t.integer :five, :default => 0
-      t.integer :ten, :default => 0
-      t.integer :all, :default => 0
+      t.string :year
+      t.integer :articles_count, :default => 0
     end
-    add_index :bibliome_authors, [:bibliome_id, :one]
-    add_index :bibliome_authors, [:bibliome_id, :five]
-    add_index :bibliome_authors, [:bibliome_id, :ten]
-    add_index :bibliome_authors, [:bibliome_id, :all]
+    add_index :bibliome_authors, [:bibliome_id, :articles_count]
+    add_index :bibliome_authors, [:bibliome_id, :year, :author_id]
   end
 
   def self.down
