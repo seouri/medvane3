@@ -3,14 +3,14 @@
 
 <h2>Build Your Own Bibliome</h2>
 
-<% form_tag pubmed_path, :method => "get", :id => "pubmed_search" do %>
+<% form_tag new_bibliome_path, :method => "get", :id => "pubmed_search" do %>
   <%= text_field_tag('q', @q, :id => "pubmed_search_q") %>
   <%= hidden_field_tag('count', @count, :name => nil) %>
   <%= submit_tag "Search PubMed", :name => nil, :disable_with => "Searching PubMed ...", :id => "pubmed_search_submit" %>
   <div id="sample_search">
     Try these queries: 
-    <%= link_to("autistic disorder[mesh]", pubmed_path(:q => "autistic disorder[mesh]"))%>
-    <%= link_to("plos med[jour]", pubmed_path(:q => "plos med[jour]"))%>
+    <%= link_to("Rett Syndrome", new_bibliome_path(:q => "Rett Syndrome"))%>
+    <%= link_to("plos med[jour]", new_bibliome_path(:q => "plos med[jour]"))%>
   </div><!-- #sample_search -->
 <% end -%>
 

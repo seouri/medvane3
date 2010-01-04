@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => "pages", :action => "about"
   map.help '/help', :controller => "pages", :action => "help"
 
-  map.resources :bibliomes, :collection => { :recent => :get, :popular => :get } do |bibliomes|
+  map.resources :bibliomes, :collection => { :recent => :get, :popular => :get, :import => :post } do |bibliomes|
     bibliomes.resources :pubtypes
     bibliomes.resources :subjects
     bibliomes.resources :authors
