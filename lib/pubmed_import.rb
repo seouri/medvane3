@@ -70,112 +70,103 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
             end
             a.save!
           end
-        
-          article_age = (Time.now.to_time - a.pubdate.to_time).round
-          article_age = 0 if article_age < 0
 
           # bibliome_journals
           periods.each do |year|
             bj = BibliomeJournal.find_or_create_by_bibliome_id_and_year_and_journal_id(bibliome.id, year, journal.id)
             bj.increment!(:articles_count)
-          end
         
-          authors.each_index do |i|
-            author = authors[i]
-            position = position_name(i + 1, authors.size)
+            authors.each_index do |i|
+              author = authors[i]
+              position = position_name(i + 1, authors.size)
 
-            #bibliome.author_journals
-            aj = AuthorJournal.find_or_create_by_bibliome_id_and_author_id_and_journal_id_and_year(bibliome.id, author.id, journal.id, m.year)
-            aj.increment!(position)
-            aj.increment!(:total)
+              #bibliome.author_journals
+              aj = AuthorJournal.find_or_create_by_bibliome_id_and_author_id_and_journal_id_and_year(bibliome.id, author.id, journal.id, year)
+              aj.increment!(position)
+              aj.increment!(:total)
 
-            #bibliome.coauthorships
-            authors.select {|c| c.id != i}.each do |coauthor|
-              ca = Coauthorship.find_or_create_by_bibliome_id_and_author_id_and_coauthor_id_and_year(bibliome.id, author.id, coauthor.id, m.year)
-              ca.increment!(position)
-              ca.increment!(:total)
-            end
-
-            #bibliome.author_subjects
-            subjects.each do |subject|
-              as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, m.year)
-              ["_direct", "_total"].each do |stype|
-                as.increment!(position + stype)
-                as.increment!("total" + stype)
+              #bibliome.coauthorships
+              authors.select {|c| c.id != i}.each do |coauthor|
+                ca = Coauthorship.find_or_create_by_bibliome_id_and_author_id_and_coauthor_id_and_year(bibliome.id, author.id, coauthor.id, year)
+                ca.increment!(position)
+                ca.increment!(:total)
               end
-            end
-            ## author_subject descendant
-            ancestors.try(:each) do |subject|
-              as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, m.year)
-              ["_descendant", "_total"].each do |stype|
-                as.increment!(position + stype)
-                as.increment!("total" + stype)
-              end
-            end
 
-            #bibliome.author_pubtypes
-            pubtypes.each do |pubtype|
-              ap = AuthorPubtype.find_or_create_by_bibliome_id_and_author_id_and_pubtype_id_and_year(bibliome.id, author.id, pubtype.id, m.year)
-              ap.increment!(position)
-              ap.increment!(:total)
-            end
+              #bibliome.author_subjects
+              subjects.each do |subject|
+                as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, year)
+                ["_direct", "_total"].each do |stype|
+                  as.increment!(position + stype)
+                  as.increment!("total" + stype)
+                end
+              end
+              ## author_subject descendant
+              ancestors.try(:each) do |subject|
+                as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, year)
+                ["_descendant", "_total"].each do |stype|
+                  as.increment!(position + stype)
+                  as.increment!("total" + stype)
+                end
+              end
+
+              #bibliome.author_pubtypes
+              pubtypes.each do |pubtype|
+                ap = AuthorPubtype.find_or_create_by_bibliome_id_and_author_id_and_pubtype_id_and_year(bibliome.id, author.id, pubtype.id, year)
+                ap.increment!(position)
+                ap.increment!(:total)
+              end
           
-            # bibliome_authors
-            ## TODO: distinguish first/last/middle/total x one/five/ten/all
-            periods.each do |year|
+              # bibliome_authors
+              ## TODO: distinguish first/last/middle/total x one/five/ten/all
               ba = BibliomeAuthor.find_or_create_by_bibliome_id_and_year_and_author_id(bibliome.id, year, author.id)
               ba.increment!(:articles_count)
             end
-          end
 
-          #bibliome.journal_pubtypes
-          pubtypes.each do |pubtype|
-            jp = JournalPubtype.find_or_create_by_bibliome_id_and_journal_id_and_pubtype_id_and_year(bibliome.id, journal.id, pubtype.id, m.year)
-            jp.increment!(:articles)
+            #bibliome.journal_pubtypes
+            pubtypes.each do |pubtype|
+              jp = JournalPubtype.find_or_create_by_bibliome_id_and_journal_id_and_pubtype_id_and_year(bibliome.id, journal.id, pubtype.id, year)
+              jp.increment!(:total)
           
-            # bibliome_pubtypes
-            periods.each do |year|
+              # bibliome_pubtypes
               bp = BibliomePubtype.find_or_create_by_bibliome_id_and_year_and_pubtype_id(bibliome.id, year, pubtype.id)
               bp.increment!(:articles_count)
             end
-          end
 
-          #bibliome.journal_subject
-          subjects.each do |subject|
-            js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
-            js.increment!(:direct)
-            js.increment!(:total)
+            #bibliome.journal_subject
+            subjects.each do |subject|
+              js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, year)
+              js.increment!(:direct)
+              js.increment!(:total)
           
-            #bibliome.cosubjects
-            subjects.reject {|s| s.id == subject.id}.each do |cosubject|
-              cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, m.year)
-              cs.increment!(:direct)
-              cs.increment!(:total)
-            end
+              #bibliome.cosubjects
+              subjects.reject {|s| s.id == subject.id}.each do |cosubject|
+                cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, year)
+                cs.increment!(:direct)
+                cs.increment!(:total)
+              end
 
-            #cosubjectst descendant
-            subjects.reject {|s| s.id == subject.id}.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s) || (subject.id == s.id)}.try(:each) do |cosubject|
-              cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, m.year)
-              cs.increment!(:descendant)
-              cs.increment!(:total)
-            end
+              #cosubjectst descendant
+              subjects.reject {|s| s.id == subject.id}.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s) || (subject.id == s.id)}.try(:each) do |cosubject|
+                cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, year)
+                cs.increment!(:descendant)
+                cs.increment!(:total)
+              end
           
-            # bibliome_subjects
-            # TODO: update schema to distinguish direct/descendant
-            periods.each do |year|
+              # bibliome_subjects
+              # TODO: update schema to distinguish direct/descendant
               bs = BibliomeSubject.find_or_create_by_bibliome_id_and_year_and_subject_id(bibliome.id, year, subject.id)
               bs.increment!(:articles_count)
             end
-          end
 
-          ## journal_subject descendant
-          ancestors.try(:each) do |subject|
-            js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
-            js.increment!(:descendant)
-            js.increment!(:total)
-            # bibliome_subjects descendants
-            # TODO: update schema to distinguish direct/descendant
-            ## one, five, ten
+            ## journal_subject descendant
+            ancestors.try(:each) do |subject|
+              js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
+              js.increment!(:descendant)
+              js.increment!(:total)
+              # bibliome_subjects descendants
+              # TODO: update schema to distinguish direct/descendant
+              ## one, five, ten
+            end
           end
  
           bibliome.bibliome_articles.create(:article_id => a.id, :pubdate => a.pubdate)

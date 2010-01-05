@@ -14,7 +14,9 @@ class JournalsController < ApplicationController
   # GET /journals/1.xml
   def show
     @journal = Journal.find(params[:id])
-
+    @authors = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => :author)
+    @subjects = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => :subject)
+    @pubtypes = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => :pubtype)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @journal }

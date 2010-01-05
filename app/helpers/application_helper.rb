@@ -11,4 +11,8 @@ module ApplicationHelper
   def sparkline(dat)
     dat = [[1999, 5], [2001, 10], [2002, 3], [2006, 12]]
   end
+  
+  def count(val, type="article")
+    content_tag(:span, "(" + pluralize(val, type) + ")", :class => "count")
+  end
 end

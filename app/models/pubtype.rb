@@ -7,4 +7,8 @@ class Pubtype < ActiveRecord::Base
   has_many :authors, :through => :author_pubtypes
   has_many :journal_pubtypes
   has_many :journals, :through => :journal_pubtypes
+  
+  def to_l
+    term
+  end
 end

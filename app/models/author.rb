@@ -25,4 +25,8 @@ class Author < ActiveRecord::Base
   def merge_with(author)
     
   end
+  
+  def to_l
+    full_name
+  end
 end

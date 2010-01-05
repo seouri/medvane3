@@ -12,4 +12,8 @@ class Subject < ActiveRecord::Base
   has_many :journals, :through => :journal_subjects
   has_many :cosubjectships
   has_many :cosubjects, :through => :cosubjectships, :source => :cosubject_id
+  
+  def to_l
+    term
+  end
 end

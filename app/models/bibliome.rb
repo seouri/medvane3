@@ -1,5 +1,5 @@
 class Bibliome < ActiveRecord::Base
-  has_many :bibliome_articles
+  has_many :bibliome_articles, :order => "#{BibliomeArticle.table_name}.pubdate desc"
   has_many :articles, :through => :bibliome_articles
   has_many :journals, :class_name => "BibliomeJournal", :include => :journal
   has_many :authors, :class_name => "BibliomeAuthor", :include => :author

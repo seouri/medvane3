@@ -6,8 +6,7 @@ class CreateBibliomeSubjects < ActiveRecord::Migration
       t.string :year
       t.integer :articles_count, :default => 0
     end
-    add_index :bibliome_subjects, [:bibliome_id, :articles_count]
-    add_index :bibliome_subjects, [:bibliome_id, :year, :subject_id]
+    add_index :bibliome_subjects, [:bibliome_id, :year, :articles_count], :name => 'index_bibliome_subjects_on_bibliome_id_year_articles_count'
   end
 
   def self.down

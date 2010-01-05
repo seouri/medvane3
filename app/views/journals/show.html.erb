@@ -1,2 +1,30 @@
 <% page_title(@journal.abbr + " | " + @bibliome.query)%>
 <h2><%=h @journal.title %></h2>
+
+<% if !@authors.blank? %>
+<h3>Top Authors</h3>
+<ul>
+  <% for item in @authors %>
+  <li><%= link_to(item.author.to_l, bibliome_author_path(@bibliome, item.author)) %> <%= count(item.total) %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if !@authors.blank? %>
+<h3>Top Subjects</h3>
+<ul>
+  <% for item in @subjects %>
+  <li><%= link_to(item.subject.to_l, bibliome_subject_path(@bibliome, item.subject)) %> <%= count(item.total) %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if !@authors.blank? %>
+<h3>Top Pubtypes</h3>
+<ul>
+  <% for item in @pubtypes %>
+  <li><%= link_to(item.pubtype.to_l, bibliome_pubtype_path(@bibliome, item.pubtype)) %> <%= count(item.total) %></li>
+  <% end %>
+</ul>
+<% end %>
+<h3>Articles</h3>

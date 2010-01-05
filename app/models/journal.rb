@@ -11,4 +11,8 @@ class Journal < ActiveRecord::Base
   
   validates_uniqueness_of :title, :scope => :abbr
   validates_uniqueness_of :abbr, :scope => :title
+  
+  def to_l
+    abbr
+  end
 end
