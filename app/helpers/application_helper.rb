@@ -7,4 +7,8 @@ module ApplicationHelper
   def has_chart
     content_for(:has_chart) {true}
   end
+  
+  def sparkline(dat)
+    dat = [[1999, 5], [2001, 10], [2002, 3], [2006, 12]]
+  end
 end
