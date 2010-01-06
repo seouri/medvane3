@@ -25,6 +25,7 @@ class Bibliome < ActiveRecord::Base
   }
   named_scope :enqueued, :conditions => { :built => false, :articles_count => 0 }
   named_scope :inprocess, :conditions => "built=0 AND articles_count > 0"
+  named_scope :last_built, :conditions => { :built => true }, :order => "built_at desc", :limit => 1
 
   def status
     if built?
@@ -39,5 +40,15 @@ class Bibliome < ActiveRecord::Base
       self.delete_at = 2.weeks.from_now
       self.increment! :hits
     end
+  end
+
+  def processing_time
+    to_time = built_at || Time.now
+    from_time = started_at || Time.now
+    (to_time - from_time).round
+  end
+
+  def build_speed
+    (articles_count.to_f / processing_time.to_f * 60).round.to_s + " articles/min"
   end
 end
