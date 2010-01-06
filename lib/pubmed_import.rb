@@ -20,7 +20,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
     0.step(bibliome.total_articles.to_i, RETMAX) do |retstart|    
       medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
 
-      unless medline.size == bibliome.total_articles.to_i # webenv expired
+      unless medline.size > 0 # webenv expired
         webenv, count = Medvane::Eutils.esearch(bibliome.query)
         medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
         if count > bibliome.total_articles
