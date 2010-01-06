@@ -82,38 +82,43 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
 
               #bibliome.author_journals
               aj = AuthorJournal.find_or_create_by_bibliome_id_and_author_id_and_journal_id_and_year(bibliome.id, author.id, journal.id, year)
-              aj.increment!(position)
-              aj.increment!(:total)
+              aj.increment(position)
+              aj.increment(:total)
+              aj.save!
 
               #bibliome.coauthorships
               authors.select {|c| c.id != author.id}.each do |coauthor|
                 ca = Coauthorship.find_or_create_by_bibliome_id_and_author_id_and_coauthor_id_and_year(bibliome.id, author.id, coauthor.id, year)
-                ca.increment!(position)
-                ca.increment!(:total)
+                ca.increment(position)
+                ca.increment(:total)
+                ca.save!
               end
 
               #bibliome.author_subjects
               subjects.each do |subject|
                 as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, year)
                 ["_direct", "_total"].each do |stype|
-                  as.increment!(position + stype)
-                  as.increment!("total" + stype)
+                  as.increment(position + stype)
+                  as.increment("total" + stype)
+                  as.save!
                 end
               end
               ## author_subject descendant
               ancestors.try(:each) do |subject|
                 as = AuthorSubject.find_or_create_by_bibliome_id_and_author_id_and_subject_id_and_year(bibliome.id, author.id, subject.id, year)
                 ["_descendant", "_total"].each do |stype|
-                  as.increment!(position + stype)
-                  as.increment!("total" + stype)
+                  as.increment(position + stype)
+                  as.increment("total" + stype)
+                  as.save!
                 end
               end
 
               #bibliome.author_pubtypes
               pubtypes.each do |pubtype|
                 ap = AuthorPubtype.find_or_create_by_bibliome_id_and_author_id_and_pubtype_id_and_year(bibliome.id, author.id, pubtype.id, year)
-                ap.increment!(position)
-                ap.increment!(:total)
+                ap.increment(position)
+                ap.increment(:total)
+                ap.save!
               end
           
               # bibliome_authors
@@ -135,21 +140,24 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
             #bibliome.journal_subject
             subjects.each do |subject|
               js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, year)
-              js.increment!(:direct)
-              js.increment!(:total)
+              js.increment(:direct)
+              js.increment(:total)
+              js.save!
           
               #bibliome.cosubjects
               subjects.reject {|s| s.id == subject.id}.each do |cosubject|
                 cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, year)
-                cs.increment!(:direct)
-                cs.increment!(:total)
+                cs.increment(:direct)
+                cs.increment(:total)
+                cs.save!
               end
 
               #cosubjectst descendant
               subjects.reject {|s| s.id == subject.id}.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s) || (subject.id == s.id)}.try(:each) do |cosubject|
                 cs = Cosubjectship.find_or_create_by_bibliome_id_and_subject_id_and_cosubject_id_and_year(bibliome.id, subject.id, cosubject.id, year)
-                cs.increment!(:descendant)
-                cs.increment!(:total)
+                cs.increment(:descendant)
+                cs.increment(:total)
+                cs.save!
               end
           
               # bibliome_subjects
@@ -161,8 +169,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
             ## journal_subject descendant
             ancestors.try(:each) do |subject|
               js = JournalSubject.find_or_create_by_bibliome_id_and_journal_id_and_subject_id_and_year(bibliome.id, journal.id, subject.id, m.year)
-              js.increment!(:descendant)
-              js.increment!(:total)
+              js.increment(:descendant)
+              js.increment(:total)
+              js.save!
               # bibliome_subjects descendants
               # TODO: update schema to distinguish direct/descendant
               ## one, five, ten
