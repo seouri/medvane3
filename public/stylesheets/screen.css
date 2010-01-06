@@ -90,6 +90,7 @@ ol#results li {
 .age, .count {
   font-size: 85%;
   color: #666;
+  white-space: nowrap;
 }
 
 .citation {
@@ -101,4 +102,10 @@ ol#results li {
 }
 .citation .source {
   font-size: 85%;
+}
+
+.top_neighbors {
+  width: 19em;
+  min-height: 19em;
+  float: left;
 }

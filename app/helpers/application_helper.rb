@@ -13,6 +13,23 @@ module ApplicationHelper
   end
   
   def count(val, type="article")
-    content_tag(:span, "(" + pluralize(val, type) + ")", :class => "count")
+    content_tag(:span, "(" + pluralize(number_with_delimiter(val), type) + ")", :class => "count")
+  end
+
+  def top_neighbors(neigbors, klass)
+    unless neigbors.blank?
+      div = []
+      div.push(content_tag(:h3, "Top #{klass.pluralize.titleize}"))
+      count_col = ["total", "total_total"].select {|c| neigbors.first.respond_to?(c) }.first
+      li = neigbors.map {|item| content_tag(:li, link_to_item(item, klass) + " " + count(item.send(count_col)))}
+      ol = content_tag(:ol, li.join("\n"))
+      div.push(ol)
+      content_tag(:div, div.join("\n"), :class => "top_neighbors", :id => "top_#{klass}")
+    end
+  end
+
+  def link_to_item(item, klass)
+    path_class = klass.gsub(/^co/, "")
+    link_to(item.send(klass).to_l, send("bibliome_#{path_class}_path", item.bibliome, item.send(klass)))
   end
 end

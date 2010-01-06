@@ -14,6 +14,8 @@ class PubtypesController < ApplicationController
   # GET /pubtypes/1.xml
   def show
     @pubtype = Pubtype.find(params[:id])
+    @journals = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => "all"}, :order => "total desc", :limit => 10, :include => :journal)    
+    @authors = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => "all"}, :order => "total desc", :limit => 10, :include => :author)
 
     respond_to do |format|
       format.html # show.html.erb
