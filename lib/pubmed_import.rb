@@ -86,7 +86,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv)
               aj.increment!(:total)
 
               #bibliome.coauthorships
-              authors.select {|c| c.id != i}.each do |coauthor|
+              authors.select {|c| c.id != author.id}.each do |coauthor|
                 ca = Coauthorship.find_or_create_by_bibliome_id_and_author_id_and_coauthor_id_and_year(bibliome.id, author.id, coauthor.id, year)
                 ca.increment!(position)
                 ca.increment!(:total)
