@@ -7,7 +7,7 @@ require 'medline'
 # 3. fetch articles in step 2 in MEDLINE format
 # 4. repeat 1-3 until all articles are received
 class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
-  RETMAX = 1000
+  RETMAX = 500
   ONE_YEAR_IN_SECONDS   = 365 * 24 * 60 * 60
   FIVE_YEARS_IN_SECONDS = 5 * ONE_YEAR_IN_SECONDS
   TEN_YEARS_IN_SECONDS  = 10 * ONE_YEAR_IN_SECONDS
