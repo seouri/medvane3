@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  before_filter :find_bibliome
+  before_filter :find_bibliome, :set_period
   helper :all # include all helpers, all the time
   helper_method :is_iphone_request?
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -19,6 +19,14 @@ private
     if params[:bibliome_id]
       @bibliome = Bibliome.find(params[:bibliome_id])
       @bibliome.hit!
+    end
+  end
+
+  def set_period
+    if ["one", "five", "ten", "all"].include?(params[:period])
+      @period = params[:period]
+    else
+      @period = "all"
     end
   end
 end
