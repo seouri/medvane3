@@ -6,7 +6,7 @@ class CreateBibliomeJournals < ActiveRecord::Migration
       t.string :year
       t.integer :articles_count, :default => 0
     end
-    add_index :bibliome_journals, [:bibliome_id, :articles_count]
+    add_index :bibliome_journals, [:bibliome_id, :year, :articles_count], :name => 'index_bibliome_journals_on_bibliome_id_year_articles_count'
     add_index :bibliome_journals, [:bibliome_id, :year, :journal_id]
   end
 

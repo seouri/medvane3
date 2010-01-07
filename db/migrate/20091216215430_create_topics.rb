@@ -4,6 +4,7 @@ class CreateTopics < ActiveRecord::Migration
       t.integer :article_id
       t.integer :subject_id
     end
+    add_index :topics, :article_id
   end
 
   def self.down

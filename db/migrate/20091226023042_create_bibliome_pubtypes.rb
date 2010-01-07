@@ -6,6 +6,7 @@ class CreateBibliomePubtypes < ActiveRecord::Migration
       t.string :year
       t.integer :articles_count, :default => 0
     end
+    add_index :bibliome_pubtypes, [:bibliome_id, :year, :pubtype_id]
     add_index :bibliome_pubtypes, [:bibliome_id, :year, :articles_count], :name => 'index_bibliome_pubtypes_on_bibliome_id_year_articles_count'
   end
 

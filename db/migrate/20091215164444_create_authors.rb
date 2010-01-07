@@ -6,12 +6,11 @@ class CreateAuthors < ActiveRecord::Migration
       t.string :initials
       t.string :suffix
     end
-    add_index :authors, [:last_name, :fore_name, :suffix], :unique => true
+    add_index :authors, [:last_name, :fore_name, :initials, :suffix], :unique => true
     add_index :authors, [:last_name, :initials]
   end
 
   def self.down
-    remove_index :table_name, :column => [:column_name, :column_name]
     drop_table :authors
   end
 end

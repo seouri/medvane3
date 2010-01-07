@@ -4,8 +4,7 @@ class CreateJournals < ActiveRecord::Migration
       t.string :title
       t.string :abbr
     end
-    add_index :journals, :title
-    add_index :journals, :abbr
+    add_index :journals, [:abbr, :title]
   end
 
   def self.down
