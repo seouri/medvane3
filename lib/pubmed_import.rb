@@ -190,7 +190,8 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
       end
     end
 
-    if bibliome.articles_count == bibliome.total_article
+    bibliome.articles_count = BibliomeArticle.count('id', :conditions => {:bibliome_id => bibliome.id})
+    if bibliome.articles_count == bibliome.total_articles
       bibliome.built = true
       bibliome.built_at = Time.now
       bibliome.delete_at = 2.weeks.from_now
