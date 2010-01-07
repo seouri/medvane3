@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.string "suffix"
   end
 
-  add_index "authors", ["last_name", "fore_name", "initials", "suffix"], :name => "index_authors_on_last_name_and_fore_name_and_initials_and_suffix", :unique => true
+  add_index "authors", ["last_name", "fore_name", "initials", "suffix"], :name => "index_authors_on_last_name_fore_name_initials_suffix", :unique => true
   add_index "authors", ["last_name", "initials"], :name => "index_authors_on_last_name_and_initials"
 
   create_table "authorships", :force => true do |t|
@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "total",        :default => 0
   end
 
-  add_index "cosubjectships", ["bibliome_id", "subject_id", "year", "cosubject_id"], :name => "index_cosubjectships_on_bibliome_id_subject_id_year_cosubject_id"
+  add_index "cosubjectships", ["bibliome_id", "subject_id", "year", "cosubject_id"], :name => "index_cosubjectships_on_bibliome_subject_year_cosubject"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -242,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "total",       :default => 0
   end
 
-  add_index "journal_pubtypes", ["bibliome_id", "journal_id", "year", "pubtype_id"], :name => "index_journal_pubtypes_on_bibliome_id_journal_id_year_pubtype_id"
+  add_index "journal_pubtypes", ["bibliome_id", "journal_id", "year", "pubtype_id"], :name => "index_journal_pubtypes_on_bibliome_journal_year_pubtype"
   add_index "journal_pubtypes", ["bibliome_id", "pubtype_id", "year"], :name => "index_journal_pubtypes_on_bibliome_id_and_pubtype_id_and_year"
 
   create_table "journal_subjects", :force => true do |t|
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "total",       :default => 0
   end
 
-  add_index "journal_subjects", ["bibliome_id", "journal_id", "year", "subject_id"], :name => "index_journal_subjects_on_bibliome_id_journal_id_year_subject_id"
+  add_index "journal_subjects", ["bibliome_id", "journal_id", "year", "subject_id"], :name => "index_journal_subjects_on_bibliome_journal_year_subject"
   add_index "journal_subjects", ["bibliome_id", "subject_id", "year"], :name => "index_journal_subjects_on_bibliome_id_and_subject_id_and_year"
 
   create_table "journals", :force => true do |t|
