@@ -42,7 +42,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "author_journals", ["bibliome_id", "author_id", "year", "journal_id"], :name => "index_author_journals_on_bibliome_id_author_id_year_journal_id"
-  add_index "author_journals", ["bibliome_id", "journal_id", "year"], :name => "index_author_journals_on_bibliome_id_and_journal_id_and_year"
+  add_index "author_journals", ["bibliome_id", "author_id", "year", "total"], :name => "index_author_journals_on_bibliome_id_author_id_year_total"
+  add_index "author_journals", ["bibliome_id", "journal_id", "year", "total"], :name => "index_author_journals_on_bibliome_id_journal_id_year_total"
 
   create_table "author_pubtypes", :force => true do |t|
     t.integer "bibliome_id"
@@ -56,7 +57,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "author_pubtypes", ["bibliome_id", "author_id", "year", "pubtype_id"], :name => "index_author_pubtypes_on_bibliome_id_author_id_year_pubtype_id"
-  add_index "author_pubtypes", ["bibliome_id", "pubtype_id", "year"], :name => "index_author_pubtypes_on_bibliome_id_and_pubtype_id_and_year"
+  add_index "author_pubtypes", ["bibliome_id", "author_id", "year", "total"], :name => "index_author_pubtypes_on_bibliome_id_author_id_year_total"
+  add_index "author_pubtypes", ["bibliome_id", "pubtype_id", "year", "total"], :name => "index_author_pubtypes_on_bibliome_id_pubtype_id_year_total"
 
   create_table "author_subjects", :force => true do |t|
     t.integer "bibliome_id"
@@ -78,7 +80,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "author_subjects", ["bibliome_id", "author_id", "year", "subject_id"], :name => "index_author_subjects_on_bibliome_id_author_id_year_subject_id"
-  add_index "author_subjects", ["bibliome_id", "subject_id", "year"], :name => "index_author_subjects_on_bibliome_id_and_subject_id_and_year"
+  add_index "author_subjects", ["bibliome_id", "author_id", "year", "total_direct"], :name => "index_author_subjects_on_bibliome_author_year_total_direct"
+  add_index "author_subjects", ["bibliome_id", "subject_id", "year", "total_direct"], :name => "index_author_subjects_on_bibliome_subject_year_total_direct"
 
   create_table "authors", :force => true do |t|
     t.string "last_name"
@@ -208,6 +211,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "coauthorships", ["bibliome_id", "author_id", "year", "coauthor_id"], :name => "index_coauthorships_on_bibliome_id_author_id_year_coauthor_id"
+  add_index "coauthorships", ["bibliome_id", "author_id", "year", "total"], :name => "index_coauthorships_on_bibliome_id_author_id_year_total"
 
   create_table "cosubjectships", :force => true do |t|
     t.integer "bibliome_id"
@@ -220,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "cosubjectships", ["bibliome_id", "subject_id", "year", "cosubject_id"], :name => "index_cosubjectships_on_bibliome_subject_year_cosubject"
+  add_index "cosubjectships", ["bibliome_id", "subject_id", "year", "direct"], :name => "index_cosubjectships_on_bibliome_subject_year_direct"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -243,7 +248,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "journal_pubtypes", ["bibliome_id", "journal_id", "year", "pubtype_id"], :name => "index_journal_pubtypes_on_bibliome_journal_year_pubtype"
-  add_index "journal_pubtypes", ["bibliome_id", "pubtype_id", "year"], :name => "index_journal_pubtypes_on_bibliome_id_and_pubtype_id_and_year"
+  add_index "journal_pubtypes", ["bibliome_id", "journal_id", "year", "total"], :name => "index_journal_pubtypes_on_bibliome_id_journal_id_year_total"
+  add_index "journal_pubtypes", ["bibliome_id", "pubtype_id", "year", "total"], :name => "index_journal_pubtypes_on_bibliome_id_pubtype_id_year_total"
 
   create_table "journal_subjects", :force => true do |t|
     t.integer "bibliome_id"
@@ -255,8 +261,9 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "total",       :default => 0
   end
 
+  add_index "journal_subjects", ["bibliome_id", "journal_id", "year", "direct"], :name => "index_journal_subjects_on_bibliome_id_journal_id_year_direct"
   add_index "journal_subjects", ["bibliome_id", "journal_id", "year", "subject_id"], :name => "index_journal_subjects_on_bibliome_journal_year_subject"
-  add_index "journal_subjects", ["bibliome_id", "subject_id", "year"], :name => "index_journal_subjects_on_bibliome_id_and_subject_id_and_year"
+  add_index "journal_subjects", ["bibliome_id", "subject_id", "year", "direct"], :name => "index_journal_subjects_on_bibliome_id_subject_id_year_direct"
 
   create_table "journals", :force => true do |t|
     t.string "title"

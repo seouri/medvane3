@@ -16,7 +16,7 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
     @journals = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])
     @coauthors = Coauthorship.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:coauthor, :bibliome])
-    @subjects = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total_total desc", :limit => 10, :include => [:subject, :bibliome])
+    @subjects = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total_direct desc", :limit => 10, :include => [:subject, :bibliome])
     @pubtypes = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
 
     respond_to do |format|

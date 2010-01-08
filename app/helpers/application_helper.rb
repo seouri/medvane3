@@ -20,7 +20,7 @@ module ApplicationHelper
     unless neigbors.blank?
       div = []
       div.push(content_tag(:h3, "Top #{klass.pluralize.titleize}"))
-      count_col = ["total", "total_total"].select {|c| neigbors.first.respond_to?(c) }.first
+      count_col = ["direct", "total_direct", "total"].select {|c| neigbors.first.respond_to?(c) }.first
       li = neigbors.map {|item| content_tag(:li, link_to_item(item, klass) + " " + count(item.send(count_col)))}
       ol = content_tag(:ol, li.join("\n"))
       div.push(ol)

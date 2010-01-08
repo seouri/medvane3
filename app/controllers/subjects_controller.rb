@@ -15,7 +15,7 @@ class SubjectsController < ApplicationController
   def show
     @subject = Subject.find(params[:id])
     @journals = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :subject_id => @subject.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])
-    @authors = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :subject_id => @subject.id, :year => "all"}, :order => "total_total desc", :limit => 10, :include => [:author, :bibliome])
+    @authors = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :subject_id => @subject.id, :year => "all"}, :order => "total_direct desc", :limit => 10, :include => [:author, :bibliome])
     @cosubjects = Cosubjectship.find(:all, :conditions => {:bibliome_id => @bibliome.id, :subject_id => @subject.id, :year => "all"}, :order => "direct desc", :limit => 10, :include => [:cosubject, :bibliome])
 
     respond_to do |format|

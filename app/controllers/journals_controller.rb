@@ -15,7 +15,7 @@ class JournalsController < ApplicationController
   def show
     @journal = Journal.find(params[:id])
     @authors = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:author, :bibliome])
-    @subjects = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:subject, :bibliome])
+    @subjects = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "direct desc", :limit => 10, :include => [:subject, :bibliome])
     @pubtypes = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
     respond_to do |format|
       format.html # show.html.erb

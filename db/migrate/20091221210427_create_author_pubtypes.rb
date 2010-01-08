@@ -11,7 +11,8 @@ class CreateAuthorPubtypes < ActiveRecord::Migration
       t.integer :total, :default => 0
     end
     add_index :author_pubtypes, [:bibliome_id, :author_id, :year, :pubtype_id], :name => 'index_author_pubtypes_on_bibliome_id_author_id_year_pubtype_id'
-    add_index :author_pubtypes, [:bibliome_id, :pubtype_id, :year]
+    add_index :author_pubtypes, [:bibliome_id, :pubtype_id, :year, :total], :name => 'index_author_pubtypes_on_bibliome_id_pubtype_id_year_total'
+    add_index :author_pubtypes, [:bibliome_id, :author_id, :year, :total], :name => 'index_author_pubtypes_on_bibliome_id_author_id_year_total'
   end
 
   def self.down
