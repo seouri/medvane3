@@ -2,7 +2,7 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    @authors = @bibliome.authors.period("all").paginate(:page => params[:page], :per_page => 10)
+    @authors = @bibliome.authors.period(@period).paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,10 +14,10 @@ class AuthorsController < ApplicationController
   # GET /authors/1.xml
   def show
     @author = Author.find(params[:id])
-    @journals = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])
-    @coauthors = Coauthorship.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:coauthor, :bibliome])
-    @subjects = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total_direct desc", :limit => 10, :include => [:subject, :bibliome])
-    @pubtypes = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
+    @journals = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])
+    @coauthors = Coauthorship.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:coauthor, :bibliome])
+    @subjects = AuthorSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => @period}, :order => "total_direct desc", :limit => 10, :include => [:subject, :bibliome])
+    @pubtypes = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :author_id => @author.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
 
     respond_to do |format|
       format.html # show.html.erb

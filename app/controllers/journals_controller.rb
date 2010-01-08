@@ -2,7 +2,7 @@ class JournalsController < ApplicationController
   # GET /journals
   # GET /journals.xml
   def index
-    @journals = @bibliome.journals.period("all").paginate(:page => params[:page], :per_page => 10)
+    @journals = @bibliome.journals.period(@period).paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,9 +14,9 @@ class JournalsController < ApplicationController
   # GET /journals/1.xml
   def show
     @journal = Journal.find(params[:id])
-    @authors = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:author, :bibliome])
-    @subjects = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "direct desc", :limit => 10, :include => [:subject, :bibliome])
-    @pubtypes = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
+    @authors = AuthorJournal.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:author, :bibliome])
+    @subjects = JournalSubject.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => @period}, :order => "direct desc", :limit => 10, :include => [:subject, :bibliome])
+    @pubtypes = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :journal_id => @journal.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:pubtype, :bibliome])
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @journal }

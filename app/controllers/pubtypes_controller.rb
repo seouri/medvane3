@@ -2,7 +2,7 @@ class PubtypesController < ApplicationController
   # GET /pubtypes
   # GET /pubtypes.xml
   def index
-    @pubtypes = @bibliome.pubtypes.period("all").paginate(:page => params[:page], :per_page => 10)
+    @pubtypes = @bibliome.pubtypes.period(@period).paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,8 +14,8 @@ class PubtypesController < ApplicationController
   # GET /pubtypes/1.xml
   def show
     @pubtype = Pubtype.find(params[:id])
-    @journals = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])    
-    @authors = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => "all"}, :order => "total desc", :limit => 10, :include => [:author, :bibliome])
+    @journals = JournalPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:journal, :bibliome])    
+    @authors = AuthorPubtype.find(:all, :conditions => {:bibliome_id => @bibliome.id, :pubtype_id => @pubtype.id, :year => @period}, :order => "total desc", :limit => 10, :include => [:author, :bibliome])
 
     respond_to do |format|
       format.html # show.html.erb
