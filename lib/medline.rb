@@ -35,8 +35,10 @@ module Bio
           tag = line[0,4].strip
           with_tag = true # bug fix
         end
-        @pubmed[tag][-1] = " " unless with_tag # bug fix
-        @pubmed[tag] += line[6..-1] if line.length > 6
+        if line.length > 6
+          @pubmed[tag][-1] = " " if @pubmed[tag][-1] and with_tag == false # bug fix
+          @pubmed[tag] += line[6..-1]
+        end
       end
     end
     attr_reader :pubmed
