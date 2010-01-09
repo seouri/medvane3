@@ -109,3 +109,18 @@ ol#results li {
   min-height: 19em;
   float: left;
 }
+
+#period_tab {
+  display: inline;
+  margin: 0;
+}
+#period_tab li {
+  width: 10em;
+  list-style: none;
+  display: inline;
+  padding: 0.25em;
+  color: #913;
+}
+#period_tab li.current {
+  font-weight: bold;
+}

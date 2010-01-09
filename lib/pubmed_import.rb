@@ -70,8 +70,9 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
           a.save!
         end
 
-        # bibliome_journals
         periods.each do |year|
+          bibliome.increment!("#{year}_articles_count") if ["one", "five", "ten"].include?(year)
+          # bibliome_journals
           bj = BibliomeJournal.find_or_initialize_by_bibliome_id_and_year_and_journal_id(bibliome.id, year, journal.id)
           bj.increment!(:articles_count)
       
@@ -190,8 +191,8 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
       end
     end
 
-    bibliome.articles_count = BibliomeArticle.count('id', :conditions => {:bibliome_id => bibliome.id})
-    if bibliome.articles_count == bibliome.total_articles
+    bibliome.all_articles_count = BibliomeArticle.count('id', :conditions => {:bibliome_id => bibliome.id})
+    if bibliome.all_articles_count == bibliome.total_articles
       bibliome.built = true
       bibliome.built_at = Time.now
       bibliome.delete_at = 2.weeks.from_now

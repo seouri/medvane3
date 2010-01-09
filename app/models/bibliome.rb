@@ -1,6 +1,6 @@
 class Bibliome < ActiveRecord::Base
-  has_many :bibliome_articles, :order => "#{BibliomeArticle.table_name}.pubdate desc"
-  has_many :articles, :through => :bibliome_articles
+  has_many :bibliome_articles
+  has_many :articles, :through => :bibliome_articles, :order => "#{BibliomeArticle.table_name}.pubdate desc"
   has_many :journals, :class_name => "BibliomeJournal", :include => :journal
   has_many :authors, :class_name => "BibliomeAuthor", :include => :author
   has_many :subjects, :class_name => "BibliomeSubject", :include => :subject
@@ -49,6 +49,6 @@ class Bibliome < ActiveRecord::Base
   end
 
   def build_speed
-    (articles_count.to_f / processing_time.to_f * 60).round.to_s + " articles/min"
+    (all_articles_count.to_f / processing_time.to_f * 60).round.to_s + " articles/min"
   end
 end

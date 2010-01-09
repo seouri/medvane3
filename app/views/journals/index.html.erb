@@ -2,7 +2,7 @@
 <%= page_entries_info @journals %>
 <ol>
 <% @journals.each do |j| -%>
-  <li><%= link_to(j.journal.abbr, bibliome_journal_path(@bibliome, j.journal)) %> <span class="count">(<%= j.articles_count %>)</span></td>
+  <li><%= link_to(j.journal.abbr, bibliome_journal_path(@bibliome, j.journal, :period => @period)) %> <span class="count">(<%= j.articles_count %>)</span></td>
 <% end -%>
 </ol>
 <%= will_paginate @journals %>

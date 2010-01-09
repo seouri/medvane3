@@ -23,7 +23,7 @@ private
   end
 
   def set_period
-    if ["one", "five", "ten", "all"].include?(params[:period])
+    if ["one", "five", "ten"].include?(params[:period])
       @period = params[:period]
     else
       @period = "all"

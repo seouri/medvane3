@@ -3,22 +3,25 @@ class CreateBibliomes < ActiveRecord::Migration
     create_table :bibliomes do |t|
       t.string :name
       t.text :query
-      t.integer :articles_count,     :default => 0
+      t.integer :all_articles_count,  :default => 0
       t.integer :all_journals_count,  :default => 0
       t.integer :all_authors_count,   :default => 0
       t.integer :all_subjects_count,  :default => 0
       t.integer :all_genes_count,     :default => 0
       t.integer :all_pubtypes_count,  :default => 0
+      t.integer :one_articles_count,  :default => 0
       t.integer :one_journals_count,  :default => 0
       t.integer :one_authors_count,   :default => 0
       t.integer :one_subjects_count,  :default => 0
       t.integer :one_genes_count,     :default => 0
       t.integer :one_pubtypes_count,  :default => 0
+      t.integer :five_articles_count, :default => 0
       t.integer :five_journals_count, :default => 0
       t.integer :five_authors_count,  :default => 0
       t.integer :five_subjects_count, :default => 0
       t.integer :five_genes_count,    :default => 0
       t.integer :five_pubtypes_count, :default => 0
+      t.integer :ten_articles_count,  :default => 0
       t.integer :ten_journals_count,  :default => 0
       t.integer :ten_authors_count,   :default => 0
       t.integer :ten_subjects_count,  :default => 0
