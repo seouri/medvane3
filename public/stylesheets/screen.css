@@ -120,6 +120,7 @@ ol#results li {
   display: inline;
   padding: 0.25em;
   color: #913;
+  font-size: 93%;
 }
 #period_tab li.current {
   font-weight: bold;
