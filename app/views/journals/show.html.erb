@@ -1,6 +1,7 @@
 <% page_title(@journal.abbr + " | " + @bibliome.query)%>
 <h2><%=h @journal.title %></h2>
 
+<%= publication_history(@bibliome, @journal) %>
 <%= top_neighbors(@authors, "author")%>
 <%= top_neighbors(@subjects, "subject")%>
 <%= top_neighbors(@pubtypes, "pubtype")%>

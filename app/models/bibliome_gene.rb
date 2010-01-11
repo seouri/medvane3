@@ -7,4 +7,8 @@ class BibliomeGene < ActiveRecord::Base
   named_scope :period, lambda {|range|
     { :conditions => { :year => range }, :order => "articles_count desc"}
   }
+
+  named_scope :bibliome, lambda {|bibliome|
+    { :conditions => { :bibliome_id => bibliome.id }}
+  }
 end

@@ -1,5 +1,5 @@
 class Subject < ActiveRecord::Base
-  has_many :bibliome_subjects
+  has_many :bibliome_subjects, :order => "year"
   has_many :bibliomes, :through => :bibliome_subjects
   has_many :topics
   has_many :articles, :through => :topics

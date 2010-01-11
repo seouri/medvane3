@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "articles_count", :default => 0
   end
 
+  add_index "bibliome_authors", ["bibliome_id", "author_id", "year"], :name => "index_bibliome_authors_on_bibliome_id_and_author_id_and_year"
   add_index "bibliome_authors", ["bibliome_id", "year", "articles_count"], :name => "index_bibliome_authors_on_bibliome_id_year_articles_count"
-  add_index "bibliome_authors", ["bibliome_id", "year", "author_id"], :name => "index_bibliome_authors_on_bibliome_id_and_year_and_author_id"
 
   create_table "bibliome_genes", :force => true do |t|
     t.integer "bibliome_id"
@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "articles_count", :default => 0
   end
 
+  add_index "bibliome_genes", ["bibliome_id", "gene_id", "year"], :name => "index_bibliome_genes_on_bibliome_id_and_gene_id_and_year"
   add_index "bibliome_genes", ["bibliome_id", "year", "articles_count"], :name => "index_bibliome_genes_on_bibliome_id_and_year_and_articles_count"
-  add_index "bibliome_genes", ["bibliome_id", "year", "gene_id"], :name => "index_bibliome_genes_on_bibliome_id_and_year_and_gene_id"
 
   create_table "bibliome_journals", :force => true do |t|
     t.integer "bibliome_id"
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "articles_count", :default => 0
   end
 
+  add_index "bibliome_journals", ["bibliome_id", "journal_id", "year"], :name => "index_bibliome_journals_on_bibliome_id_and_journal_id_and_year"
   add_index "bibliome_journals", ["bibliome_id", "year", "articles_count"], :name => "index_bibliome_journals_on_bibliome_id_year_articles_count"
-  add_index "bibliome_journals", ["bibliome_id", "year", "journal_id"], :name => "index_bibliome_journals_on_bibliome_id_and_year_and_journal_id"
 
   create_table "bibliome_pubtypes", :force => true do |t|
     t.integer "bibliome_id"
@@ -148,8 +148,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "articles_count", :default => 0
   end
 
+  add_index "bibliome_pubtypes", ["bibliome_id", "pubtype_id", "year"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_pubtype_id_and_year"
   add_index "bibliome_pubtypes", ["bibliome_id", "year", "articles_count"], :name => "index_bibliome_pubtypes_on_bibliome_id_year_articles_count"
-  add_index "bibliome_pubtypes", ["bibliome_id", "year", "pubtype_id"], :name => "index_bibliome_pubtypes_on_bibliome_id_and_year_and_pubtype_id"
 
   create_table "bibliome_subjects", :force => true do |t|
     t.integer "bibliome_id"
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.integer "articles_count", :default => 0
   end
 
+  add_index "bibliome_subjects", ["bibliome_id", "subject_id", "year"], :name => "index_bibliome_subjects_on_bibliome_id_and_subject_id_and_year"
   add_index "bibliome_subjects", ["bibliome_id", "year", "articles_count"], :name => "index_bibliome_subjects_on_bibliome_id_year_articles_count"
-  add_index "bibliome_subjects", ["bibliome_id", "year", "subject_id"], :name => "index_bibliome_subjects_on_bibliome_id_and_year_and_subject_id"
 
   create_table "bibliomes", :force => true do |t|
     t.string   "name"

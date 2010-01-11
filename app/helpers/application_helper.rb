@@ -57,4 +57,37 @@ module ApplicationHelper
     end
     content_tag(:ul, li.join("\n"), :id => "period_tab")
   end
+
+  def publication_history(bibliome, object)
+    collection_name = "bibliome_" + object.class.to_s.pluralize.downcase
+    data = object.send(collection_name).bibliome(bibliome)
+    if data.size > 0
+      years = data.select {|d| d.year.match(/^\d+$/) }.map {|d| d.year}.sort
+      years_range = (years.first .. years.last).to_a
+      x_axis_label = years_range.map {|y| y == years.first || y == years.last ? y : "" }
+      data_by_year = data.group_by(&:year)
+      articles = years_range.map {|y| data_by_year[y].nil? ? 0 : data_by_year[y][0].articles_count } 
+      article_max = number_with_delimiter(articles.sort.last)
+      content_tag(:div, bar_chart(articles, x_axis_label, article_max), :id => "publication_history")
+    end
+  end
+  #<% if !@journal.bibliome_journals.bibliome(@bibliome).blank? %>
+  #<ul>
+  #  <% for item in @journal.bibliome_journals.bibliome(@bibliome) %>
+  #  <li><%= item.year%>: <%= item.articles_count %> (<%= item.bibliome_id %>)</li>
+  #  <% end %>
+  #</ul>
+  #<% end -%>
+
+  def bar_chart(data, x_axis_label, y_axis_max, legend = nil)
+    x_axis_label[0] = "" unless x_axis_label.size == 1 || x_axis_label.size > 5
+    width = x_axis_label.size * 8 + y_axis_max.to_s.size * 6 + 10 + 10
+    width += 70 unless legend.nil?
+    colors = case data.size
+      when 2: "000066,999999"
+      when 3: "660000,999999,000066"
+      else "999999"
+    end
+    Gchart.bar(:data => data, :axis_labels => [x_axis_label, [0, y_axis_max]], :bar_colors => colors, :legend => legend, :size => "#{width}x40", :axis_with_labels => 'x,y', :bar_width_and_spacing => {:width => 5, :spacing => 3}, :format => 'image_tag', :alt => "publication history")
+  end  
 end

@@ -1,5 +1,5 @@
 class Pubtype < ActiveRecord::Base
-  has_many :bibliome_pubtypes
+  has_many :bibliome_pubtypes, :order => "year"
   has_many :bibliomes, :through => :bibliome_pubtypes
   has_many :article_types
   has_many :articles, :through => :article_types

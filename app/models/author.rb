@@ -1,5 +1,5 @@
 class Author < ActiveRecord::Base
-  has_many :bibliome_authors
+  has_many :bibliome_authors, :order => "year"
   has_many :bibliomes, :through => :bibliome_authors
   has_many :authorships
   has_many :articles, :through => :authorships

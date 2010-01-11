@@ -1,5 +1,5 @@
 class Journal < ActiveRecord::Base
-  has_many :bibliome_journals
+  has_many :bibliome_journals, :order => "year"
   has_many :bibliomes, :through => :bibliome_journals
   has_many :articles
   has_many :author_journals

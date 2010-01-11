@@ -6,7 +6,7 @@ class CreateBibliomeGenes < ActiveRecord::Migration
       t.string :year
       t.integer :articles_count, :default => 0
     end
-    add_index :bibliome_genes, [:bibliome_id, :year, :gene_id]
+    add_index :bibliome_genes, [:bibliome_id, :gene_id, :year]
     add_index :bibliome_genes, [:bibliome_id, :year, :articles_count]
   end
 
