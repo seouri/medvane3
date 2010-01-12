@@ -3,7 +3,7 @@
 <%= page_entries_info @articles %>
 <ol>
 <% @articles.each do |article| %>
-  <li class="citation"><div class="title"><%= article.title %></div><div class="authors"><%= article.authors.map {|a| link_to(a.init_name, bibliome_author_path(@bibliome, a))}.join(", ")%></div><div class="source"><%= link_to(article.source, bibliome_journal_path(@bibliome, article.journal_id)) %></div></li>
+  <li class="citation"><div class="title"><%= article.title %></div><div class="authors"><%= article.authors.map {|a| link_to(a.init_name, bibliome_author_path(@bibliome, a))}.join(", ")%></div><div class="source"><%= link_to(article.source, bibliome_journal_path(@bibliome, article.journal_id)) %></div><div class="subjects"><%= article.subjects.map {|s| link_to(s.term, bibliome_subject_path(@bibliome, s))}.join(", ")%></div></li>
 <% end -%>
 </ol>
 <%= will_paginate @articles %>

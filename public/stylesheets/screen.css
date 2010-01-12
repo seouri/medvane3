@@ -100,7 +100,7 @@ ol#results li {
   font-size: 108%;
   font-weight: bold;
 }
-.citation .source {
+.citation .source, .citation .subjects {
   font-size: 85%;
 }
 
