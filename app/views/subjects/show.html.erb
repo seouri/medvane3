@@ -1,4 +1,4 @@
-<% page_title(@subject.term + " | " + @bibliome.query)%>
+<% page_title(@subject.term, "Subjects", @bibliome.query)%>
 <h2><%=h @subject.term %></h2>
 <%= publication_history(@bibliome, @subject) %>
 <%= top_neighbors(@journals, "journal")%>

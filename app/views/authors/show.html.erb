@@ -1,4 +1,4 @@
-<% page_title(@author.full_name + " | " + @bibliome.query)%>
+<% page_title(@author.full_name, "Authors", @bibliome.query)%>
 <h2><%= @author.full_name %></h2>
 <%= publication_history(@bibliome, @author) %>
 <%= top_neighbors(@journals, "journal")%>

@@ -1,4 +1,4 @@
-<% page_title(@pubtype.term + " | " + @bibliome.query)%>
+<% page_title(@pubtype.term, "Pubtypes", @bibliome.query)%>
 <h2><%= @pubtype.term %></h2>
 <%= publication_history(@bibliome, @pubtype) %>
 <%= top_neighbors(@journals, "journal")%>

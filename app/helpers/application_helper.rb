@@ -1,8 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def page_title(title)
-    @page_title = title
-    content_for(:title) {title}
+  def page_title(*args)
+    @page_title = args.join(" | ")
+    content_for(:title) {@page_title}
   end
 
   def page_header(bibliome)

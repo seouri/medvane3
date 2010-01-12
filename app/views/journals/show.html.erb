@@ -1,4 +1,4 @@
-<% page_title(@journal.abbr + " | " + @bibliome.query)%>
+<% page_title(@journal.abbr, "Journals", @bibliome.query)%>
 <h2><%=h @journal.title %></h2>
 
 <%= publication_history(@bibliome, @journal) %>
