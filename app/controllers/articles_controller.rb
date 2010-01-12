@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    @articles = @bibliome.articles.paginate(:page => params[:page], :per_page => 10, :include => :authors)
+    @articles = @bibliome.articles.paginate(:page => params[:page], :per_page => 10, :include => :authors, :total_entries => @bibliome.send("#{@period}_articles_count"))
 
     respond_to do |format|
       format.html # index.html.erb

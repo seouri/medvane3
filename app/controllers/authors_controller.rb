@@ -2,7 +2,7 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    @authors = @bibliome.authors.period(@period).paginate(:page => params[:page], :per_page => 10)
+    @authors = @bibliome.authors.period(@period).paginate(:page => params[:page], :per_page => 10, :total_entries => @bibliome.send("#{@period}_authors_count"))
 
     respond_to do |format|
       format.html # index.html.erb

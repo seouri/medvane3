@@ -2,7 +2,7 @@ class JournalsController < ApplicationController
   # GET /journals
   # GET /journals.xml
   def index
-    @journals = @bibliome.journals.period(@period).paginate(:page => params[:page], :per_page => 10)
+    @journals = @bibliome.journals.period(@period).paginate(:page => params[:page], :per_page => 10, :total_entries => @bibliome.send("#{@period}_journals_count"))
 
     respond_to do |format|
       format.html # index.html.erb

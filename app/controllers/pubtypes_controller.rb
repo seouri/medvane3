@@ -2,7 +2,7 @@ class PubtypesController < ApplicationController
   # GET /pubtypes
   # GET /pubtypes.xml
   def index
-    @pubtypes = @bibliome.pubtypes.period(@period).paginate(:page => params[:page], :per_page => 10)
+    @pubtypes = @bibliome.pubtypes.period(@period).paginate(:page => params[:page], :per_page => 10, :total_entries => @bibliome.send("#{@period}_pubtypes_count"))
 
     respond_to do |format|
       format.html # index.html.erb
