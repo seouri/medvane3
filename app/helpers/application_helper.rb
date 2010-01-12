@@ -40,7 +40,8 @@ module ApplicationHelper
 
   def link_to_item(item, klass)
     path_class = klass.gsub(/^co/, "")
-    link_to(item.send(klass).to_l, send("bibliome_#{path_class}_path", item.bibliome, item.send(klass), :period => @period))
+    period = @period == "all" ? nil : @period
+    link_to(item.send(klass).to_l, send("bibliome_#{path_class}_path", item.bibliome, item.send(klass), :period => period))
   end
 
   def period_tab(period="all")
