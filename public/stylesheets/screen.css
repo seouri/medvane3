@@ -51,12 +51,12 @@ li {
   padding: 0.1em 0.6em;
   background-color: #333;
   color: #ccc;
+  display: block;
 }
 
 #bd h1 a, #bd h1 a:visited {
   color: #ccc;
   text-decoration: none;
-  display: block;
 }
 
 #bd h1 a:hover {
@@ -124,4 +124,25 @@ ol#results li {
 }
 #period_tab li.current {
   font-weight: bold;
+}
+
+#bibliome_nav {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+#bibliome_nav li {
+  margin: 0;
+  padding: 0 0.25em;
+  list-style: none;
+  font-size: 85%;
+  font-weight: normal;
+  display: inline;
+}
+#bibliome_nav li.current a {
+  font-weight: bold;
+  color: #fff;
+}
+#bibliome_nav li.current a:hover {
+  color: #ea1;
 }

@@ -9,9 +9,20 @@ module ApplicationHelper
     header_text = @page_title
     if bibliome
       period = @period == "all" ? nil : @period
-      header_text = link_to_unless_current(h(@bibliome.query), bibliome_path(@bibliome, :period => period))
+      header_text = link_to_unless_current(h(@bibliome.query), bibliome_path(@bibliome, :period => period)) + " | " + bibliome_nav(bibliome)
     end
     content_tag(:h1, header_text)
+  end
+
+  def bibliome_nav(bibliome)
+    period = @period == "all" ? nil : @period
+    li = []
+    ["articles", "journals", "authors", "subjects", "pubtypes"].each do |obj|
+      css_class = controller.controller_name == obj ? "current" : nil
+      item = content_tag(:li, link_to(obj, send("bibliome_#{obj}_path", bibliome, :period => period)), :class => css_class)
+      li.push(item)
+    end
+    content_tag(:ul, li.join("\n"), :id => "bibliome_nav")
   end
 
   def has_chart
