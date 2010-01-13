@@ -1,6 +1,6 @@
 <% page_title(@bibliome.query)%>
 <%= status(@bibliome) %>
-<%= summary(@bibliome, @period) %>
+<%= summary(@bibliome) %>
 
 <% if @bibliome.built? -%>
 <div class="age">Built <%= time_ago_in_words(@bibliome.built_at)%> ago, will be deleted in 2 weeks from now if there is no access.</div>

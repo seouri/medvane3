@@ -30,11 +30,12 @@ module BibliomesHelper
     end
   end
 
-  def summary(bibliome, period="all")
+  def summary(bibliome)
+    period = @period == "all" ? nil : @period
     if bibliome.built?
       li = []
       ["article", "journal", "author", "subject", "pubtype"].each do |obj|
-        counter_field = "#{period}_#{obj}s_count"
+        counter_field = "#{@period}_#{obj}s_count"
         count = bibliome.send(counter_field)
         link_text = pluralize(number_with_delimiter(count), obj.titleize)
         link_path = controller.send("bibliome_#{obj}s_path", bibliome, :period => period)
