@@ -83,13 +83,6 @@ module ApplicationHelper
       content_tag(:div, bar_chart(articles, x_axis_label, article_max), :id => "publication_history")
     end
   end
-  #<% if !@journal.bibliome_journals.bibliome(@bibliome).blank? %>
-  #<ul>
-  #  <% for item in @journal.bibliome_journals.bibliome(@bibliome) %>
-  #  <li><%= item.year%>: <%= item.articles_count %> (<%= item.bibliome_id %>)</li>
-  #  <% end %>
-  #</ul>
-  #<% end -%>
 
   def bar_chart(data, x_axis_label, y_axis_max, legend = nil)
     x_axis_label[0] = "" unless x_axis_label.size == 1 || x_axis_label.size > 5
