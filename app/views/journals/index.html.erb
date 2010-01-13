@@ -3,7 +3,7 @@
 <%= page_entries_info @journals %>
 <ol>
 <% @journals.each do |j| -%>
-  <li><%= link_to(j.journal.abbr, bibliome_journal_path(@bibliome, j.journal, :period => @period)) %> <%= count(j.articles_count) %></td>
+  <li><%= link_to(j.journal.abbr, bibliome_journal_path(@bibliome, j.journal, :period => @period)) %> <%= count(j.articles_count) %> <%= sparkline(@bibliome, j.journal)%></td>
 <% end -%>
 </ol>
 <%= will_paginate @journals %>

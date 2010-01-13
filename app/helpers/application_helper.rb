@@ -29,10 +29,6 @@ module ApplicationHelper
     content_for(:has_chart) {true}
   end
   
-  def sparkline(dat)
-    dat = [[1999, 5], [2001, 10], [2002, 3], [2006, 12]]
-  end
-  
   def count(val, type="article")
     content_tag(:span, "(" + pluralize(number_with_delimiter(val), type) + ")", :class => "count")
   end
@@ -94,5 +90,20 @@ module ApplicationHelper
       else "999999"
     end
     Gchart.bar(:data => data, :axis_labels => [x_axis_label, [0, y_axis_max]], :bar_colors => colors, :legend => legend, :size => "#{width}x40", :axis_with_labels => 'x,y', :bar_width_and_spacing => {:width => 5, :spacing => 3}, :format => 'image_tag', :alt => "publication history")
-  end  
+  end
+
+  def sparkline(bibliome, object)
+    collection_name = "bibliome_" + object.class.to_s.pluralize.downcase
+    data = object.send(collection_name).bibliome(bibliome)
+    if data.length > 0
+      years = data.select {|d| d.year.match(/^\d+$/) }.map {|d| d.year}.sort
+      years_range = (years.first .. years.last).to_a
+      data_by_year = data.group_by(&:year)
+      articles = years_range.map {|y| data_by_year[y].nil? ? 0 : data_by_year[y][0].articles_count }
+      alt_text = "publication history #{years.first}-#{years.last}"
+      size = "30x10"
+      source = Gchart.sparkline(:data => articles, :line_colors => "999999", :size => size, :alt => alt_text)
+      image_tag(source, :alt => alt_text, :title => alt_text, :size => size)
+    end
+  end
 end
