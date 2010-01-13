@@ -7,7 +7,7 @@ module ApplicationHelper
 
   def page_header(bibliome)
     header_text = @page_title
-    if bibliome
+    if bibliome.built?
       period = @period == "all" ? nil : @period
       header_text = link_to_unless_current(h(@bibliome.query), bibliome_path(@bibliome, :period => period)) + " | " + bibliome_nav(bibliome)
     end
