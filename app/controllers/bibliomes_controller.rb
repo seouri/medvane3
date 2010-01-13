@@ -57,9 +57,10 @@ class BibliomesController < ApplicationController
       @bibliome.query = q
       @bibliome.total_articles = count
       @bibliome.save!
-      priority = (50 / Math.log(count)).to_i
-      0.step(@bibliome.total_articles.to_i, PubmedImport::RETMAX) do |retstart|    
+      priority = (400 / Math.log(count)).to_i
+      0.step(@bibliome.total_articles.to_i, PubmedImport::RETMAX) do |retstart| 
         Delayed::Job.enqueue(PubmedImport.new(@bibliome.id, webenv, retstart), priority)
+        priority -= 1
       end
       redirect_to @bibliome
     else
