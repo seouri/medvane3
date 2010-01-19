@@ -155,6 +155,7 @@ ol#results li {
   display: inline;
 }
 #see_also li {
+  margin: 0 0.25em;
   list-style: none;
   display: inline;
 }
