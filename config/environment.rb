@@ -20,7 +20,7 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "googlecharts", :version => "1.4.0", :source => "http://gemcutter.org", :lib => "gchart"
-  config.gem "will_paginate", :version => "2.3.11", :source => "http://gemcutter.org"
+  config.gem "will_paginate", :version => "2.3.12", :source => "http://gemcutter.org"
   config.gem "bio", :version => "1.3.1", :source => "http://gemcutter.org"
   config.gem "delayed_job", :version => "1.8.4", :source => "http://gemcutter.org"
 
