@@ -3,7 +3,7 @@
 <%= page_entries_info @pubtypes %>
 <ol>
 <% @pubtypes.each do |p| -%>
-  <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype, :period => @period))%> <%= count(p.articles_count) %> <%= sparkline(@bibliome, p.pubtype)%></li>
+  <li><%= link_to(p.pubtype.term, bibliome_pubtype_path(@bibliome, p.pubtype, :period => @link_period))%> <%= count(p.articles_count) %> <%= sparkline(@bibliome, p.pubtype)%></li>
 <% end -%>
 </ol>
 <%= will_paginate @pubtypes %>

@@ -3,7 +3,7 @@
 <%= page_entries_info @authors %>
 <ol>
 <% @authors.each do |a| -%>
-  <li><%= link_to(a.author.full_name, bibliome_author_path(@bibliome, a.author, :period => @period)) %> <%= count(a.articles_count) %> <%= sparkline(@bibliome, a.author)%></li>
+  <li><%= link_to(a.author.full_name, bibliome_author_path(@bibliome, a.author, :period => @link_period)) %> <%= count(a.articles_count) %> <%= sparkline(@bibliome, a.author)%></li>
 <% end -%>
 </ol>
 <%= will_paginate @authors %>

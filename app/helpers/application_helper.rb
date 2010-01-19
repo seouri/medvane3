@@ -8,18 +8,16 @@ module ApplicationHelper
   def page_header(bibliome)
     header_text = @page_title
     if bibliome and bibliome.built?
-      period = @period == "all" ? nil : @period
-      header_text = link_to_unless_current(h(@bibliome.query), bibliome_path(@bibliome, :period => period)) + " | " + bibliome_nav(bibliome)
+      header_text = link_to_unless_current(h(@bibliome.query), bibliome_path(@bibliome, :period => @link_period)) + " | " + bibliome_nav(bibliome)
     end
     content_tag(:h1, header_text)
   end
 
   def bibliome_nav(bibliome)
-    period = @period == "all" ? nil : @period
     li = []
     ["articles", "journals", "authors", "subjects", "pubtypes"].each do |obj|
       css_class = controller.controller_name == obj ? "current" : nil
-      item = content_tag(:li, link_to(obj, send("bibliome_#{obj}_path", bibliome, :period => period)), :class => css_class)
+      item = content_tag(:li, link_to(obj, send("bibliome_#{obj}_path", bibliome, :period => @link_period)), :class => css_class)
       li.push(item)
     end
     content_tag(:ul, li.join("\n"), :id => "bibliome_nav")
@@ -47,8 +45,7 @@ module ApplicationHelper
 
   def link_to_item(item, klass)
     path_class = klass.gsub(/^co/, "")
-    period = @period == "all" ? nil : @period
-    link_to(item.send(klass).to_l, send("bibliome_#{path_class}_path", item.bibliome, item.send(klass), :period => period))
+    link_to(item.send(klass).to_l, send("bibliome_#{path_class}_path", item.bibliome, item.send(klass), :period => @link_period))
   end
 
   def period_tab(period="all")

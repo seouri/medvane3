@@ -3,7 +3,7 @@
 <%= page_entries_info @subjects %>
 <ol>
 <% @subjects.each do |s| -%>
-  <li><%= link_to(s.subject.term, bibliome_subject_path(@bibliome, s.subject, :period => @period)) %> <%= count(s.articles_count) %> <%= sparkline(@bibliome, s.subject)%></li>
+  <li><%= link_to(s.subject.term, bibliome_subject_path(@bibliome, s.subject, :period => @link_period)) %> <%= count(s.articles_count) %> <%= sparkline(@bibliome, s.subject)%></li>
 <% end -%>
 </ol>
 <%= will_paginate @subjects %>

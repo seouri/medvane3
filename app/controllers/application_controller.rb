@@ -28,5 +28,6 @@ private
     else
       @period = "all"
     end
+    @link_period = @period == "all" ? nil : @period
   end
 end
