@@ -19,7 +19,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
     article_ids = bibliome.article_ids
     medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
 
-    unless medline.size > 0 # webenv expired
+    while medline.size == 0 # webenv expired
       webenv, count = Medvane::Eutils.esearch(bibliome.query)
       medline = Medvane::Eutils.efetch(webenv, retstart, RETMAX, "medline")
       if count > bibliome.total_articles
@@ -29,7 +29,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
     end
 
     medline.each do |m|
-      unless article_ids.include?(m.pmid.to_i) # do this way rather than medline.reject!{...}.each to save memory
+      unless article_ids.include?(m.pmid.to_i) || m.pmid.blank? # do this way rather than medline.reject!{...}.each to save memory
         # http://www.nlm.nih.gov/bsd/mms/medlineelements.html
         a = Article.find_or_initialize_by_id(m.pmid)
 
