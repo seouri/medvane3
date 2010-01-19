@@ -146,3 +146,15 @@ ol#results li {
 #bibliome_nav li.current a:hover {
   color: #ea1;
 }
+#see_also {
+  margin: -1em 0 1em 0;
+  font-size: 85%;
+}
+#see_also ul {
+  margin: 0;
+  display: inline;
+}
+#see_also li {
+  list-style: none;
+  display: inline;
+}

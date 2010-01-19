@@ -1,5 +1,6 @@
 <% page_title(@author.full_name, "Authors", @bibliome.query)%>
 <h2><%= @author.full_name %></h2>
+<%= see_also(@author)%>
 <%= publication_history(@bibliome, @author) %>
 <%= top_neighbors(@journals, "journal")%>
 <%= top_neighbors(@coauthors, "coauthor")%>
