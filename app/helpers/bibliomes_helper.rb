@@ -1,7 +1,7 @@
 module BibliomesHelper
   def status(bibliome)
     unless bibliome.built?
-      status = "#{bibliome.total_articles} articles are enqueued for importing. Please bookmark this page and come back later."
+      status = "#{number_with_delimiter(bibliome.total_articles)} articles are enqueued for importing. Please bookmark this page and come back later."
       progressbar = ''
       if bibliome.all_articles_count > 0
         percentage = sprintf("%d", bibliome.all_articles_count.to_f / bibliome.total_articles.to_f * 100)
