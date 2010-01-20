@@ -9,7 +9,7 @@ module BibliomesHelper
         rate = bibliome.all_articles_count.to_f / (Time.now - started_at)
         time_left = ((bibliome.total_articles - bibliome.all_articles_count).to_f / rate).to_i
         estimate = distance_of_time_in_words(Time.now, Time.now + time_left)
-        status = "#{bibliome.all_articles_count} of #{bibliome.total_articles} articles (#{percentage}%) were imported in #{processing_time(bibliome)} (#{bibliome.build_speed}). Estimated time to finish importing is #{estimate}."
+        status = "#{number_with_delimiter(bibliome.all_articles_count)} of #{number_with_delimiter(bibliome.total_articles)} articles (#{percentage}%) were imported in #{processing_time(bibliome)} (#{bibliome.build_speed}). Estimated time to finish importing is #{estimate}."
         progressbar = content_tag(:div, content_tag(:div, content_tag(:div, "#{percentage}%", :style => "padding-left: 0.5em"), :style => "background-color: #ccc; width: #{percentage}%; border-right: 1px solid #913"), :style => "border: 1px solid #913; margin-top: 0.5em")
       end
       content_tag(:div, status + progressbar, :id => "bibliome_status")
