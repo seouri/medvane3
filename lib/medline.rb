@@ -95,5 +95,13 @@ module Bio
     def pubdate
       sprintf("%04d-%02d-%02d", year || 0, pub_month || 0, pub_day || 0)
     end
+
+    def ellipsis_jt
+      if jt.length > 236
+        jt[0 .. 235] + "..."
+      else
+        jt
+      end
+    end
   end
 end

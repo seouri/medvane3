@@ -34,7 +34,7 @@ class PubmedImport < Struct.new(:bibliome_id, :webenv, :retstart)
         a = Article.find_or_initialize_by_id(m.pmid)
 
         periods = periods(m.pubdate)
-        journal = Journal.find_or_create_by_abbr_and_title(m.ta, m.jt)
+        journal = Journal.find_or_create_by_abbr_and_title(m.ta, m.ellipsis_jt)
         subjects = m.major_descriptors.map {|d| Subject.find_by_term(d)}
         ancestors = subjects.map {|s| s.ancestors}.flatten.uniq.reject! {|s| subjects.include?(s)}
         pubtypes = m.pt.map {|p| Pubtype.find_or_create_by_term(p.gsub(/JOURNAL ARTICLE/, "Journal Article"))}
