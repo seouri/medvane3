@@ -13,4 +13,10 @@ namespace :mdvn do
       end
     end
   end
+
+  desc "Updates Gene from PubMed"
+  task :genes => :environment do
+    # ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz
+    # ftp://ftp.ncbi.nih.gov/gene/DATA/gene2pubmed.gz
+  end
 end
