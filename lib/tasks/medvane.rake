@@ -1,7 +1,6 @@
 namespace :mdvn do
   desc "Updates Journal from PubMed"
   task :journals => :environment do
-    require 'pubmed_journal'
     journal_ids = Journal.all(:select => :id).map {|j| j.id}
     journals = PubmedJournal.get
     journals.each do |j|
