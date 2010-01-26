@@ -1,12 +1,3 @@
-journals_file = File.join(File.dirname(__FILE__), 'journals.txt')
-if File.stat(journals_file).size > 0
-  File.foreach(journals_file) do |record|
-    j = Journal.new
-    j.id, j.title, j.abbr, issn, essn, nlm_id = record.chomp.split("\t")
-    j.save! unless Journal.find_by_title_and_abbr(j.title, j.abbr)
-  end
-end
-
 descriptor_file = File.join(File.dirname(__FILE__), 'desc.2010.txt')
 if File.stat(descriptor_file).size > 0
   File.foreach(descriptor_file) do |record|
