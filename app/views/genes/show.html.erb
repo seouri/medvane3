@@ -1,0 +1,13 @@
+<p>
+  <b>Taxonomy:</b>
+  <%=h @gene.taxonomy_id %>
+</p>
+
+<p>
+  <b>Symbol:</b>
+  <%=h @gene.symbol %>
+</p>
+
+
+<%= link_to 'Edit', edit_gene_path(@gene) %> |
+<%= link_to 'Back', genes_path %>

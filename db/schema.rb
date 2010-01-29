@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091226023507) do
+ActiveRecord::Schema.define(:version => 20100128231533) do
 
   create_table "article_types", :force => true do |t|
     t.integer "article_id"
@@ -242,6 +242,13 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
     t.datetime "updated_at"
   end
 
+  create_table "genes", :force => true do |t|
+    t.integer "taxonomy_id"
+    t.string  "symbol"
+  end
+
+  add_index "genes", ["symbol"], :name => "index_genes_on_symbol"
+
   create_table "journal_pubtypes", :force => true do |t|
     t.integer "bibliome_id"
     t.integer "journal_id"
@@ -292,6 +299,13 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   add_index "mesh_trees", ["subject_id"], :name => "index_mesh_trees_on_subject_id"
   add_index "mesh_trees", ["tree_number"], :name => "index_mesh_trees_on_tree_number", :unique => true
 
+  create_table "published_genes", :force => true do |t|
+    t.integer "article_id"
+    t.integer "gene_id"
+  end
+
+  add_index "published_genes", ["article_id"], :name => "index_published_genes_on_article_id"
+
   create_table "pubtypes", :force => true do |t|
     t.string "term"
   end
@@ -303,6 +317,10 @@ ActiveRecord::Schema.define(:version => 20091226023507) do
   end
 
   add_index "subjects", ["term"], :name => "index_subjects_on_term", :unique => true
+
+  create_table "taxonomies", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "topics", :force => true do |t|
     t.integer "article_id"

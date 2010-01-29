@@ -4,11 +4,12 @@ ActionController::Routing::Routes.draw do |map|
   map.help '/help', :controller => "pages", :action => "help"
 
   map.resources :bibliomes, :collection => { :recent => :get, :popular => :get, :import => :post } do |bibliomes|
+    bibliomes.resources :genes
     bibliomes.resources :pubtypes
     bibliomes.resources :subjects
     bibliomes.resources :authors
     bibliomes.resources :journals
-    bibliomes.resources :articles    
+    bibliomes.resources :articles
   end
 
   map.pubmed '/build/pubmed/:q', :controller => "build", :action => "pubmed", :defaults => {:q => nil}
