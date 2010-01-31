@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   config.gem "will_paginate", :version => "2.3.12", :source => "http://gemcutter.org"
   config.gem "bio", :version => "1.3.1", :source => "http://gemcutter.org"
   config.gem "delayed_job", :version => "1.8.4", :source => "http://gemcutter.org"
+  config.gem "libxml-ruby", :version => "1.1.3", :source => "http://gemcutter.org"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
