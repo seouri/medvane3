@@ -4,7 +4,6 @@ class CreateGenes < ActiveRecord::Migration
       t.integer :taxonomy_id
       t.string :symbol
     end
-    add_index :genes, :symbol
   end
 
   def self.down

@@ -4,7 +4,6 @@ class CreatePublishedGenes < ActiveRecord::Migration
       t.integer :article_id
       t.integer :gene_id
     end
-    add_index :published_genes, :article_id
   end
 
   def self.down
