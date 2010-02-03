@@ -115,17 +115,21 @@ ol#results li {
   margin: 0;
 }
 #period_tab li {
-  width: 10em;
   list-style: none;
   display: inline;
-  padding: 0.25em;
-  color: #913;
-  font-size: 93%;
+  color: #fff;
+  font-size: 85%;
+  white-space: nowrap;
 }
 #period_tab li.current {
-  font-weight: bold;
+  background-color: #000;
+  cursor: default;
 }
-
+#period_tab a {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
 #bibliome_nav {
   margin: 0;
   padding: 0;
@@ -158,4 +162,27 @@ ol#results li {
   margin: 0 0.25em;
   list-style: none;
   display: inline;
+}
+
+.button, .button:visited {
+	background: #444 url(/images/button-overlay.png) repeat-x; 
+	display: inline-block; 
+	padding: 5px 7px; 
+	color: #fff; 
+	text-decoration: none;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	position: relative;
+	cursor: pointer;
+}
+.button:hover { background-color: #222; }
+.button:active { top: 1px; }
+.button, .button:visited {
+  font-weight: bold; 
+  line-height: 1; 
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
 }

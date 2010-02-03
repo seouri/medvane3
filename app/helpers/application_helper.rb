@@ -54,11 +54,10 @@ module ApplicationHelper
     periods.each do |p|
       period_key = p[0]
       period_val = p[1]
-      li_class = period == period_key ? "current" : nil
-      link_text = period_val
+      li_class = period == period_key ? "current button" : ""
       period_key = nil if period_key == "all"
       link = url_for(:period => period_key)
-      li.push(content_tag(:li, link_to_unless(li_class, link_text, link), :class => li_class))
+      li.push(content_tag(:li, link_to_unless(@link_period == period_key, period_val, link, :class => "button"), :class => li_class))
     end
     content_tag(:ul, li.join("\n"), :id => "period_tab")
   end
