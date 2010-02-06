@@ -8,6 +8,7 @@ namespace :mdvn do
   task :setup => :environment do
     ['journals', 'taxonomies', 'published_genes', 'genes'].each do |task|
       Delayed::Job.enqueue(SetupJob.new(task))
+      puts "[#{Time.now.to_s}] enqueued SetupJob.new(#{task})"
     end
   end
 

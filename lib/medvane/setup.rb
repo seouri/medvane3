@@ -29,6 +29,8 @@ module Medvane
       end
 
       def genes
+        puts "[#{Time.now.to_s}] removing index from Gene"
+        migrate_down(20100131153724)
         puts "[#{Time.now.to_s}] recreate Gene"
         remigrate(20100128151156)
 
@@ -56,6 +58,8 @@ module Medvane
       end
 
       def published_genes
+        puts "[#{Time.now.to_s}] removing index from PublishedGene"
+        migrate_down(20100131153734)
         puts "[#{Time.now.to_s}] recreate PublishedGene"
         remigrate(20100127150217)
 
@@ -106,7 +110,7 @@ module Medvane
       private
   
       def migrate_down(version)
-        ActiveRecord::Migrator.run(:down, "db/migrate/", version)
+        ActiveRecord::Migrator.run(:down, "db/migrate/", version) if ActiveRecord::Migrator.get_all_versions.include?(version)
       end
 
       def migrate_up(version)
