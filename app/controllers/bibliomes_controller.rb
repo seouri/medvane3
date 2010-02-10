@@ -24,6 +24,14 @@ class BibliomesController < ApplicationController
     end
   end
 
+  def inprocess
+    @bibliomes = Bibliome.inprocess.paginate(:page => params[:page], :per_page => 10)
+    @prefix = "In Process "
+    respond_to do |format|
+      format.html { render :action => "index" }
+    end
+  end
+
   def show
     @bibliome = Bibliome.find(params[:id])
     @bibliome.hit!

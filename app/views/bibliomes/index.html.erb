@@ -2,7 +2,7 @@
 <%= page_entries_info @bibliomes %>
 <ul>
   <% for item in @bibliomes -%>
-  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= item.total_articles %> articles, <%= age(item) %>)</span></li>
+  <li><%= link_to(h(item.query), bibliome_path(item))%> <span class="age">(<%= item.total_articles %> articles, <%= age(item) %>)</span><%= status(item) %></li>
   <% end -%>
 </ul>
 <%= will_paginate @bibliomes %>
