@@ -24,7 +24,7 @@ class Bibliome < ActiveRecord::Base
     { :conditions => { :built => true }, :order => "hits desc", :limit => limit }
   }
   named_scope :enqueued, :conditions => { :built => false, :articles_count => 0 }
-  named_scope :inprocess, :conditions => "built=0 AND articles_count > 0"
+  named_scope :inprocess, :conditions => ["built = ? AND all_articles_count > 0", false]
   named_scope :last_built, :conditions => { :built => true }, :order => "built_at desc", :limit => 1
 
   def status
